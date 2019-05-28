@@ -26,7 +26,7 @@ public class GuideMapper {
         Locale locale = LocaleContextHolder.getLocale();
 
         if (!LocaleUtils.isAvailableLocale(locale)) {
-            throw new IllegalArgumentException("Invalid Locale Supplied");
+            throw new IllegalArgumentException("Invalid Locale");
         }
 
         Optional<SiteLocale> siteLocale = localeRepository.findByCode(locale.toString());

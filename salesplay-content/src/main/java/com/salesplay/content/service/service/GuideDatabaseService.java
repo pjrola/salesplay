@@ -41,7 +41,7 @@ public class GuideDatabaseService implements GuideService {
     }
 
     public Page<Guide> findAll(Pageable pageable) {
-        return null;
+        return repository.findAll(pageable);
     }
 
     public Iterable findAllById(Iterable ids) {
