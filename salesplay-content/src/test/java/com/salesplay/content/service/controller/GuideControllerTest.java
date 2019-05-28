@@ -2,10 +2,13 @@ package com.salesplay.content.service.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.salesplay.content.service.domain.*;
+import com.salesplay.content.service.dto.GuideDTO;
+import com.salesplay.content.service.dto.GuideMapper;
 import com.salesplay.content.service.exception.DuplicateResourceException;
 import com.salesplay.content.service.exception.ResourceNotFoundException;
 import com.salesplay.content.service.service.GuideDatabaseService;
 import com.salesplay.content.service.service.MessageResourceDatabaseService;
+import com.salesplay.content.service.service.SiteLocaleDatabaseService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,8 +53,14 @@ public class GuideControllerTest {
     @MockBean
     private MessageResourceDatabaseService messageByLocaleService;
 
+    @MockBean
+    private SiteLocaleDatabaseService siteLocaleDatabaseService;
+
     @Autowired
     private ObjectMapper mapper;
+
+    @MockBean
+    private GuideMapper guideMapper;
 
     private Guide guideMock;
     private SiteLocale localeMock;
@@ -203,8 +212,8 @@ public class GuideControllerTest {
         String contentAsString = result.getResponse().getContentAsString();
 
         JSONAssert.assertEquals(
-                contentAsString, actual,
-                JSONCompareMode.LENIENT
+            contentAsString, actual,
+            JSONCompareMode.LENIENT
         );
     }
 

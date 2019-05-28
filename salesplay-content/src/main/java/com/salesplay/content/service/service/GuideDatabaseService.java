@@ -27,8 +27,9 @@ public class GuideDatabaseService implements GuideService {
         this.siteLocaleRepository = siteLocaleRepository;
     }
 
-    public Guide findBySlug(String slug) {
-        return null;
+    public Guide findBySlug(String slug) throws ResourceNotFoundException {
+        return repository.findBySlug(slug).orElseThrow(()
+                -> new ResourceNotFoundException(slug));
     }
 
     public Iterable<Guide> saveAll(Iterable<Guide> types) {
