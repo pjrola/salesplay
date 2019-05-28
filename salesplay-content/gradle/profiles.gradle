@@ -1,0 +1,42 @@
+// ----
+// How to use Profiles with -P arguments
+// ----
+//
+// Run gradle bootRun tasks with the -P argument to utilize a profile.
+//
+// For example, within a subproject's directory:
+// gradle -Pdev bootRun
+
+def prodProfiles='prod'
+def devProfiles='dev'
+def testProfiles='test'
+def propertyDrivenProfiles;
+
+if (project.hasProperty('prod')) {
+    propertyDrivenProfiles = prodProfiles
+} else {
+    propertyDrivenProfiles = devProfiles
+}
+
+apply from: rootProject.file('gradle/profile_' + propertyDrivenProfiles + '.gradle');
+
+println 'Using profile: "' + propertyDrivenProfiles + '" for ' + project.getName()
+
+test {
+    environment "spring.profiles.active", propertyDrivenProfiles
+}
+
+bootRun {
+    systemProperties = [
+            'spring.profiles.active': propertyDrivenProfiles
+    ]
+
+    ext.applyPropertyIfExists = { propertyKey ->
+        if(project.hasProperty(propertyKey)) {
+            systemProperties[propertyKey] = project.getProperty(propertyKey)
+        }
+    }
+    applyPropertyIfExists('spring.datasource.url')
+    applyPropertyIfExists('spring.datasource.username')
+    applyPropertyIfExists('spring.datasource.password')
+}

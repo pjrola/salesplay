@@ -83,7 +83,7 @@ public class GuideTest {
     @Test
     public void getTranslationByLocale() throws Exception {
         guide.addTranslation(englishTranslation);
-        GuideTranslation t = guide.getTranslationByLocale(en);
+        GuideTranslation t = guide.getTranslationByLocale(en.getCode());
 
         assertEquals(englishTranslation, t);
     }
@@ -91,7 +91,7 @@ public class GuideTest {
     @Test
     public void returnNullWhenTranslationIsNotFound() throws Exception {
         guide.addTranslation(englishTranslation);
-        assertNull(guide.getTranslationByLocale(de));
+        assertNull(guide.getTranslationByLocale(de.getCode()));
     }
 
 }

@@ -3,6 +3,7 @@ package com.salesplay.content.service.controller;
 import com.salesplay.content.service.domain.Guide;
 import com.salesplay.content.service.dto.GuideDTO;
 import com.salesplay.content.service.dto.GuideMapper;
+import com.salesplay.content.service.exception.ResourceNotFoundException;
 import com.salesplay.content.service.service.GuideDatabaseService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,33 @@ public class GuideController {
     @ResponseStatus(HttpStatus.CREATED)
     public GuideDTO create(@Valid @RequestBody GuideDTO dto) {
         return null;
+    }
+
+    @PostMapping(RESOURCE_PATH + "/delete")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@RequestBody List<Guide> guides) throws ResourceNotFoundException {
+        service.deleteAll(guides);
+    }
+
+    @PutMapping(RESOURCE_PATH)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public Guide update(@Valid @RequestBody Guide guide) throws ResourceNotFoundException {
+        return service.update(guide);
+    }
+
+    @GetMapping(RESOURCE_PATH + "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public Guide findById(@PathVariable(value = "id") Long guideId) throws ResourceNotFoundException {
+        return service.findById(guideId);
+    }
+
+    @GetMapping(RESOURCE_PATH + "/slug/{slug}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public Guide findBySlug(@PathVariable(value = "slug") String slug) throws ResourceNotFoundException {
+        return service.findBySlug(slug);
     }
 }

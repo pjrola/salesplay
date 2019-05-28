@@ -1,45 +1,41 @@
 package com.salesplay.content.service.service;
 
-import com.salesplay.content.service.domain.Guide;
+import com.salesplay.content.service.domain.SiteLocale;
 import com.salesplay.content.service.exception.DuplicateResourceException;
 import com.salesplay.content.service.exception.ResourceNotFoundException;
-import com.salesplay.content.service.repository.GuideRepository;
 import com.salesplay.content.service.repository.SiteLocaleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import javax.servlet.http.HttpServletRequest;
 
 @Service
-public class GuideDatabaseService implements GuideService {
-
-    @Autowired
-    HttpServletRequest request;
-
-    private GuideRepository repository;
+public class SiteLocaleDatabaseService implements SiteLocaleService {
 
     private SiteLocaleRepository siteLocaleRepository;
 
     @Autowired
-    public GuideDatabaseService(GuideRepository repository, SiteLocaleRepository siteLocaleRepository) {
-        this.repository = repository;
+    public SiteLocaleDatabaseService(SiteLocaleRepository siteLocaleRepository) {
         this.siteLocaleRepository = siteLocaleRepository;
     }
 
-    public Guide findBySlug(String slug) {
+    public String getMessage(String code) {
         return null;
     }
 
-    public Iterable<Guide> saveAll(Iterable<Guide> types) {
+    public String getMessageWithParam(String code, Object[] var2) {
         return null;
     }
 
-    public Guide save(Guide type) throws DuplicateResourceException {
+    public Iterable<SiteLocale> saveAll(Iterable<SiteLocale> types) {
         return null;
     }
 
-    public Page<Guide> findAll(Pageable pageable) {
+    public SiteLocale save(SiteLocale type) throws DuplicateResourceException {
+        return null;
+    }
+
+    public Page<SiteLocale> findAll(Pageable pageable) {
         return null;
     }
 
@@ -47,7 +43,7 @@ public class GuideDatabaseService implements GuideService {
         return null;
     }
 
-    public Guide findById(Long id) throws ResourceNotFoundException {
+    public SiteLocale findById(Long id) throws ResourceNotFoundException {
         return null;
     }
 
@@ -55,7 +51,7 @@ public class GuideDatabaseService implements GuideService {
 
     }
 
-    public void delete(Guide type) throws ResourceNotFoundException {
+    public void delete(SiteLocale type) throws ResourceNotFoundException {
 
     }
 
@@ -63,11 +59,11 @@ public class GuideDatabaseService implements GuideService {
 
     }
 
-    public void deleteAll(Iterable<Guide> types) {
+    public void deleteAll(Iterable<SiteLocale> types) {
 
     }
 
-    public Guide update(Guide type) throws ResourceNotFoundException {
+    public SiteLocale update(SiteLocale type) throws ResourceNotFoundException {
         return null;
     }
 

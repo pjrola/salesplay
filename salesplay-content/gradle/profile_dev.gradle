@@ -1,0 +1,4 @@
+dependencies {
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+    compile 'mysql:mysql-connector-java'
+}

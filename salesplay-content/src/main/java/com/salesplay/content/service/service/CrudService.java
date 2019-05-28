@@ -1,25 +1,32 @@
 package com.salesplay.content.service.service;
 
+import com.salesplay.content.service.exception.DuplicateResourceException;
+import com.salesplay.content.service.exception.ResourceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import java.util.Optional;
 
 public interface CrudService<T, ID> {
-    T save(T entity);
+    Iterable<T> saveAll(Iterable<T> types);
 
-    T update(T entity);
-
-    Optional<T> findById(ID id);
-
-    boolean existsById(ID id);
+    T save(T type) throws DuplicateResourceException;
 
     Page<T> findAll(Pageable pageable);
 
-    long count();
+    Iterable findAllById(Iterable ids);
 
-    void deleteById(ID id);
+    T findById(Long id) throws ResourceNotFoundException;
 
-    void delete(T entity);
+    void deleteById(Long id) throws ResourceNotFoundException;
+
+    void delete(T type) throws ResourceNotFoundException;
 
     void deleteAll();
+
+    void deleteAll(Iterable<T> types);
+
+    T update(T type) throws ResourceNotFoundException;
+
+    Long count();
+
+    Boolean existsById(Long id) throws ResourceNotFoundException;
 }

@@ -36,3 +36,5 @@ dependencies {
     compile group: 'com.google.guava', name: 'guava', version: '19.0'
     compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
 }
+
+apply from: rootProject.file('gradle/profiles.gradle')
