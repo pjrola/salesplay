@@ -9,13 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 @Service
 public class GuideDatabaseService implements GuideService {
-
-    @Autowired
-    HttpServletRequest request;
 
     private GuideRepository repository;
 
@@ -32,12 +29,18 @@ public class GuideDatabaseService implements GuideService {
                 -> new ResourceNotFoundException(slug));
     }
 
-    public Iterable<Guide> saveAll(Iterable<Guide> types) {
-        return null;
+    public Iterable<Guide> saveAll(Iterable<Guide> guides) {
+        return repository.saveAll(guides);
     }
 
-    public Guide save(Guide type) throws DuplicateResourceException {
-        return null;
+    public Guide save(Guide guide) throws DuplicateResourceException {
+        Optional<Guide> duplicate = repository.findBySlug(guide.getSlug());
+
+        if (duplicate.isPresent()) {
+            throw new DuplicateResourceException(guide.getSlug());
+        }
+
+        return repository.save(guide);
     }
 
     public Page<Guide> findAll(Pageable pageable) {
@@ -45,27 +48,28 @@ public class GuideDatabaseService implements GuideService {
     }
 
     public Iterable findAllById(Iterable ids) {
-        return null;
+        return repository.findAllById(ids);
     }
 
     public Guide findById(Long id) throws ResourceNotFoundException {
-        return null;
+        return repository.findById(id).orElseThrow(()
+                -> new ResourceNotFoundException(id.toString()));
     }
 
     public void deleteById(Long id) throws ResourceNotFoundException {
-
+        repository.deleteById(findById(id).getId());
     }
 
-    public void delete(Guide type) throws ResourceNotFoundException {
-
+    public void delete(Guide guide) throws ResourceNotFoundException {
+        repository.delete(findById(guide.getId()));
     }
 
     public void deleteAll() {
-
+        repository.deleteAll();
     }
 
-    public void deleteAll(Iterable<Guide> types) {
-
+    public void deleteAll(Iterable<Guide> guides) {
+        repository.deleteAll(guides);
     }
 
     public Guide update(Guide type) throws ResourceNotFoundException {
@@ -73,10 +77,10 @@ public class GuideDatabaseService implements GuideService {
     }
 
     public Long count() {
-        return null;
+        return repository.count();
     }
 
-    public Boolean existsById(Long id) throws ResourceNotFoundException {
-        return null;
+    public Boolean existsById(Long id) {
+        return repository.existsById(id);
     }
 }
