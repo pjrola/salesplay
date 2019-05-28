@@ -1,7 +1,6 @@
 package com.salesplay.content.service.controller;
 
 import com.salesplay.content.service.domain.Guide;
-import com.salesplay.content.service.domain.SiteLocale;
 import com.salesplay.content.service.dto.GuideDTO;
 import com.salesplay.content.service.dto.GuideMapper;
 import com.salesplay.content.service.service.GuideDatabaseService;
@@ -12,6 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,13 +37,19 @@ public class GuideController {
     @ResponseStatus(HttpStatus.OK)
     public Page<GuideDTO> findAll(Pageable pageable) {
         Page<Guide> guidePage = service.findAll(pageable);
-        SiteLocale englishLocale = SiteLocale.of("English", "en", true, true);
 
         List<GuideDTO> guideDTOS = guidePage.getContent()
                 .stream()
-                .map(guide -> mapper.INSTANCE.guideToGuideDto(guide, guide.getTranslationByLocale(englishLocale)))
+                .map(guide -> mapper.mapToDto(guide))
                 .collect(Collectors.toList());
 
         return new PageImpl<>(guideDTOS, pageable, guidePage.getTotalPages());
+    }
+
+    @PostMapping(RESOURCE_PATH)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
+    public GuideDTO create(@Valid @RequestBody GuideDTO dto) {
+        return null;
     }
 }

@@ -8,12 +8,12 @@ CREATE TABLE locales (
   last_modified_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
   constraint uk_code unique(code),
   primary key (id)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO locales (name, code, is_default, is_enabled) VALUES
 ('English', 'en', 1, 1),
-('Japanese', 'ja', 0, 0),
-('Chinese', 'zh_CN', 0, 0),
+('Japanese', 'ja', 0, 1),
+('Chinese', 'zh_CN', 0, 1),
 ('Spanish', 'es', 0, 0),
 ('Hindi', 'hi', 0, 0),
 ('Arabic', 'ar', 0, 0),

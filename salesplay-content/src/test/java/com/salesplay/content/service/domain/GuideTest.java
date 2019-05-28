@@ -2,24 +2,22 @@ package com.salesplay.content.service.domain;
 
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 @SpringBootTest
 public class GuideTest {
 
-    SiteLocale englishLocale = SiteLocale.of("English", "en", true, true);
-    SiteLocale germanLocale = SiteLocale.of("German", "de", false, true);
-    SiteLocale frenchLocale = SiteLocale.of("French", "fr", false, true);
+    SiteLocale en = SiteLocale.of("English", "en", true, true);
+    SiteLocale de = SiteLocale.of("German", "de", false, true);
+    SiteLocale fr = SiteLocale.of("French", "fr", false, true);
 
     private Guide guide = Guide.of("slug", EditorialStatus.PUBLISHED, Visibility.PUBLIC, "image");
-    private GuideTranslation englishTranslation = GuideTranslation.of(englishLocale, "title", "subtitle", "overview");
-    private GuideTranslation germanTranslation = GuideTranslation.of(germanLocale, "title", "subtitle", "overview");
-    private GuideTranslation frenchTranslation = GuideTranslation.of(frenchLocale, "title", "subtitle", "overview");
+    private GuideTranslation englishTranslation = GuideTranslation.of(en, "title", "subtitle", "overview");
+    private GuideTranslation germanTranslation = GuideTranslation.of(de, "title", "subtitle", "overview");
+    private GuideTranslation frenchTranslation = GuideTranslation.of(fr, "title", "subtitle", "overview");
 
     @Test
     public void addTranslationToGuide() throws Exception {
@@ -85,7 +83,7 @@ public class GuideTest {
     @Test
     public void getTranslationByLocale() throws Exception {
         guide.addTranslation(englishTranslation);
-        GuideTranslation t = guide.getTranslationByLocale(englishLocale);
+        GuideTranslation t = guide.getTranslationByLocale(en);
 
         assertEquals(englishTranslation, t);
     }
@@ -93,7 +91,7 @@ public class GuideTest {
     @Test
     public void returnNullWhenTranslationIsNotFound() throws Exception {
         guide.addTranslation(englishTranslation);
-        assertNull(guide.getTranslationByLocale(germanLocale));
+        assertNull(guide.getTranslationByLocale(de));
     }
 
 }

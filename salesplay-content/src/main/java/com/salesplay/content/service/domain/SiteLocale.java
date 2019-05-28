@@ -1,12 +1,10 @@
 package com.salesplay.content.service.domain;
 
 import lombok.Getter;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Entity
@@ -22,11 +20,9 @@ public class SiteLocale extends PersistentObject {
     @Column(name = "code", nullable = false)
     private String code;
 
-    @NotEmpty
     @Column(name = "is_default", nullable = false)
     private Boolean isDefault = false;
 
-    @NotEmpty
     @Column(name = "is_enabled", nullable = false)
     private Boolean isEnabled = false;
 

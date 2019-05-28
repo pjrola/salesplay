@@ -10,8 +10,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Embeddable
 public class GuideTranslation {
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "locale_id")
+    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "locale_id", referencedColumnName="id")
     private SiteLocale locale;
 
     @NotEmpty(message = "{guide.title.notNull}")
@@ -26,7 +26,7 @@ public class GuideTranslation {
     @Column(name = "overview", columnDefinition="TEXT", nullable = false)
     private String overview;
 
-    protected GuideTranslation(){}
+    private GuideTranslation(){}
 
     private GuideTranslation(SiteLocale locale, String title, String subtitle, String overview) {
         this.locale = locale;

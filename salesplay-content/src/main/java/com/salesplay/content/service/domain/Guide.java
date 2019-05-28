@@ -91,10 +91,10 @@ public class Guide extends PersistentObject {
         }
     }
 
-    public GuideTranslation getTranslationByLocale(SiteLocale locale) {
+    public GuideTranslation getTranslationByLocale(String locale) {
         checkNotNull(locale);
         for(GuideTranslation translation : translations) {
-            if(translation.getLocale().getCode().equals(locale.getCode())) {
+            if(translation.getLocale().getCode().equalsIgnoreCase(locale)) {
                 return translation;
             }
         }
