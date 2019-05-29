@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.salesplay.content.service.domain.MessageResource;
 import com.salesplay.content.service.exception.DuplicateResourceException;
 import com.salesplay.content.service.exception.ResourceNotFoundException;
-import com.salesplay.content.service.service.MessageResourceDatabaseService;
+import com.salesplay.content.service.service.MessageByLocaleDatabaseService;
 import com.salesplay.content.service.service.SiteLocaleDatabaseService;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +43,7 @@ public class MessageResourceControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private MessageResourceDatabaseService service;
+    private MessageByLocaleDatabaseService msgService;
 
     @MockBean
     private SiteLocaleDatabaseService siteLocaleDatabaseService;
@@ -69,7 +69,7 @@ public class MessageResourceControllerTest {
 
         Page<MessageResource> pagedResponse = new PageImpl(messageResources);
 
-        when(service.findAll(PageRequest.of(0, 20))).thenReturn(pagedResponse);
+        when(msgService.findAll(PageRequest.of(0, 20))).thenReturn(pagedResponse);
 
         mockMvc.perform(get(RESOURCE_PATH))
                 .andExpect(status().isOk())
@@ -78,7 +78,7 @@ public class MessageResourceControllerTest {
 
     @Test
     public void canRetrieveByIdWhenExists() throws Exception {
-        when(service.findById(1L)).thenReturn(messageResource);
+        when(msgService.findById(1L)).thenReturn(messageResource);
 
         String actual = mapper.writeValueAsString(messageResource);
 
@@ -97,7 +97,7 @@ public class MessageResourceControllerTest {
 
     @Test
     public void shouldThrowResourceNotFoundExceptionWhenFindByIdLocaleDoesNotExist() throws Exception {
-        when(service.findById(1L)).thenThrow(new ResourceNotFoundException("1"));
+        when(msgService.findById(1L)).thenThrow(new ResourceNotFoundException("1"));
 
         mockMvc.perform(get(RESOURCE_PATH + "/{id}", 1L))
                 .andExpect(status().isNotFound());
@@ -105,26 +105,7 @@ public class MessageResourceControllerTest {
 
     @Test
     public void shouldThrowDuplicateResourceExceptionWhenLocaleAlreadyExists() throws DuplicateResourceException {
-        when(service.save(messageResource)).thenThrow(new DuplicateResourceException(messageResource.getKey()));
-    }
-
-    @Test
-    public void canUpdateLocaleWithValidInput() throws Exception {
-        when(service.update(messageResource)).thenReturn(messageResource);
-        String actual = mapper.writeValueAsString(messageResource);
-
-        ResultActions resultActions = mockMvc.perform(put(RESOURCE_PATH).accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(actual))
-                .andExpect(status().isOk());
-
-        MvcResult result = resultActions.andReturn();
-        String contentAsString = result.getResponse().getContentAsString();
-
-        JSONAssert.assertEquals(
-                contentAsString, actual,
-                JSONCompareMode.LENIENT
-        );
+        when(msgService.save(messageResource)).thenThrow(new DuplicateResourceException(messageResource.getKey()));
     }
 
     @Test
@@ -140,7 +121,7 @@ public class MessageResourceControllerTest {
 
     @Test
     public void canPostLocaleWithValidInput() throws Exception {
-        when(service.save(messageResource)).thenReturn(messageResource);
+        when(msgService.save(messageResource)).thenReturn(messageResource);
 
         String actual = mapper.writeValueAsString(messageResource);
 

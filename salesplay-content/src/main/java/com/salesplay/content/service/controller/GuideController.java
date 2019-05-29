@@ -25,6 +25,7 @@ public class GuideController {
 
     @NotNull
     private GuideDatabaseService service;
+
     private GuideMapper mapper;
 
     @Autowired
@@ -51,7 +52,8 @@ public class GuideController {
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     public GuideDTO create(@Valid @RequestBody GuideDTO dto) {
-        return null;
+        Guide guide = mapper.mapFromDto(dto);
+        return mapper.mapToDto(guide);
     }
 
     @PostMapping(RESOURCE_PATH + "/delete")
@@ -65,7 +67,7 @@ public class GuideController {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Guide update(@Valid @RequestBody Guide guide) throws ResourceNotFoundException {
-        return service.update(guide);
+        return service.save(guide);
     }
 
     @GetMapping(RESOURCE_PATH + "/{id}")

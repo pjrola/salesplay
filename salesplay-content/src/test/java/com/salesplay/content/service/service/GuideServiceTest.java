@@ -6,12 +6,13 @@ import com.salesplay.content.service.repository.SiteLocaleRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
-@RunWith(SpringRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class GuideServiceTest {
 
     @Mock
@@ -29,7 +30,7 @@ public class GuideServiceTest {
     @Mock
     private SiteLocaleRepository siteLocaleRepository;
 
-    @Mock
+    @InjectMocks
     private GuideDatabaseService guideDatabaseService;
 
     private Guide guideMock;
@@ -40,7 +41,6 @@ public class GuideServiceTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        guideDatabaseService = new GuideDatabaseService(guideRepository, siteLocaleRepository);
         localeMock = SiteLocale.of("English", "en", true, true);
         translationMock = GuideTranslation.of(localeMock, "title", "subtitle", "overview");
         translations.add(translationMock);
@@ -64,7 +64,7 @@ public class GuideServiceTest {
     }
 
     @Test
-    public void canRetrieveById() throws Exception {
+    public void canFindById() throws Exception {
         when(guideRepository.findById(1L)).thenReturn(Optional.ofNullable(guideMock));
         Optional<Guide> result = Optional.ofNullable(guideDatabaseService.findById(1L));
         assertTrue(result.isPresent());
@@ -95,6 +95,9 @@ public class GuideServiceTest {
         guideList.add(guideMock);
 
         when(guideRepository.saveAll(guideList)).thenReturn(guideList);
+        Iterable<Guide> result = guideDatabaseService.saveAll(guideList);
+
+        assertEquals(guideList, result);
         verify(guideRepository, times(1)).saveAll(guideList);
     }
 
@@ -125,10 +128,9 @@ public class GuideServiceTest {
     }
 
     @Test
-    public void deleteAll() throws Exception {
-        when(guideRepository.deleteAll());
-        Optional<Guide> result = Optional.ofNullable(guideDatabaseService.findById(1L));
-        guideDatabaseService.deleteById(1L);
-        verify(guideRepository, times(1)).deleteById(result.get().getId());
+    public void canDeleteAll() throws Exception {
+        guideDatabaseService.deleteAll();
+        verify(guideRepository, times(1)).deleteAll();
     }
+
 }

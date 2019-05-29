@@ -1,6 +1,5 @@
 package com.salesplay.content.service.service;
 
-import com.salesplay.content.service.exception.DuplicateResourceException;
 import com.salesplay.content.service.exception.ResourceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 public interface CrudService<T, ID> {
     Iterable<T> saveAll(Iterable<T> types);
 
-    T save(T type) throws DuplicateResourceException;
+    T save(T type);
 
     Page<T> findAll(Pageable pageable);
 
@@ -23,10 +22,4 @@ public interface CrudService<T, ID> {
     void deleteAll();
 
     void deleteAll(Iterable<T> types);
-
-    T update(T type) throws ResourceNotFoundException;
-
-    Long count();
-
-    Boolean existsById(Long id) throws ResourceNotFoundException;
 }

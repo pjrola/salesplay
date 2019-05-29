@@ -1,7 +1,6 @@
 package com.salesplay.content.service.service;
 
 import com.salesplay.content.service.domain.Guide;
-import com.salesplay.content.service.exception.DuplicateResourceException;
 import com.salesplay.content.service.exception.ResourceNotFoundException;
 import com.salesplay.content.service.repository.GuideRepository;
 import com.salesplay.content.service.repository.SiteLocaleRepository;
@@ -9,19 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
 
 @Service
 public class GuideDatabaseService implements GuideService {
 
     private GuideRepository repository;
 
-    private SiteLocaleRepository siteLocaleRepository;
-
     @Autowired
     public GuideDatabaseService(GuideRepository repository, SiteLocaleRepository siteLocaleRepository) {
         this.repository = repository;
-        this.siteLocaleRepository = siteLocaleRepository;
     }
 
     public Guide findBySlug(String slug) throws ResourceNotFoundException {
@@ -33,13 +28,7 @@ public class GuideDatabaseService implements GuideService {
         return repository.saveAll(guides);
     }
 
-    public Guide save(Guide guide) throws DuplicateResourceException {
-        Optional<Guide> duplicate = repository.findBySlug(guide.getSlug());
-
-        if (duplicate.isPresent()) {
-            throw new DuplicateResourceException(guide.getSlug());
-        }
-
+    public Guide save(Guide guide) {
         return repository.save(guide);
     }
 
@@ -70,17 +59,5 @@ public class GuideDatabaseService implements GuideService {
 
     public void deleteAll(Iterable<Guide> guides) {
         repository.deleteAll(guides);
-    }
-
-    public Guide update(Guide type) throws ResourceNotFoundException {
-        return null;
-    }
-
-    public Long count() {
-        return repository.count();
-    }
-
-    public Boolean existsById(Long id) {
-        return repository.existsById(id);
     }
 }

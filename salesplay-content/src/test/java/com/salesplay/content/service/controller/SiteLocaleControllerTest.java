@@ -44,7 +44,7 @@ public class SiteLocaleControllerTest {
     private SiteLocale localeMock;
 
     @MockBean
-    private SiteLocaleDatabaseService databaseService;
+    private SiteLocaleDatabaseService service;
 
     @Autowired
     private ObjectMapper mapper;
@@ -63,7 +63,7 @@ public class SiteLocaleControllerTest {
 
         Page<SiteLocale> pagedResponse = new PageImpl(locales);
 
-        when(databaseService.findAll(PageRequest.of(0, 20))).thenReturn(pagedResponse);
+        when(service.findAll(PageRequest.of(0, 20))).thenReturn(pagedResponse);
 
         mockMvc.perform(get("/locales"))
                 .andExpect(status().isOk())
@@ -72,7 +72,7 @@ public class SiteLocaleControllerTest {
 
     @Test
     public void canRetrieveLocaleByIdWhenExists() throws Exception {
-        when(databaseService.findById(1L)).thenReturn(localeMock);
+        when(service.findById(1L)).thenReturn(localeMock);
 
         String actual = mapper.writeValueAsString(localeMock);
 
@@ -91,7 +91,7 @@ public class SiteLocaleControllerTest {
 
     @Test
     public void shouldThrowResourceNotFoundExceptionWhenFindByIdLocaleDoesNotExist() throws Exception {
-        when(databaseService.findById(1L)).thenThrow(new ResourceNotFoundException("1"));
+        when(service.findById(1L)).thenThrow(new ResourceNotFoundException("1"));
 
         mockMvc.perform(get("/locales/{id}", 1L))
                 .andExpect(status().isNotFound());
@@ -99,26 +99,7 @@ public class SiteLocaleControllerTest {
 
     @Test
     public void shouldThrowDuplicateResourceExceptionWhenLocaleAlreadyExists() throws DuplicateResourceException {
-        when(databaseService.save(localeMock)).thenThrow(new DuplicateResourceException(localeMock.getCode()));
-    }
-
-    @Test
-    public void canUpdateLocaleWithValidInput() throws Exception {
-        when(databaseService.update(localeMock)).thenReturn(localeMock);
-        String actual = mapper.writeValueAsString(localeMock);
-
-        ResultActions resultActions = mockMvc.perform(put("/locales").accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(actual))
-                .andExpect(status().isOk());
-
-        MvcResult result = resultActions.andReturn();
-        String contentAsString = result.getResponse().getContentAsString();
-
-        JSONAssert.assertEquals(
-                contentAsString, actual,
-                JSONCompareMode.LENIENT
-        );
+        when(service.save(localeMock)).thenThrow(new DuplicateResourceException(localeMock.getCode()));
     }
 
     @Test
@@ -134,7 +115,7 @@ public class SiteLocaleControllerTest {
 
     @Test
     public void canPostLocaleWithValidInput() throws Exception {
-        when(databaseService.save(localeMock)).thenReturn(localeMock);
+        when(service.save(localeMock)).thenReturn(localeMock);
 
         String actual = mapper.writeValueAsString(localeMock);
 

@@ -1,7 +1,7 @@
 package com.salesplay.content.service.config;
 
 import com.salesplay.content.service.domain.MessageResource;
-import com.salesplay.content.service.service.MessageResourceDatabaseService;
+import com.salesplay.content.service.service.MessageByLocaleDatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.AbstractMessageSource;
 import org.springframework.stereotype.Component;
@@ -15,10 +15,10 @@ public class DBMessageResource extends AbstractMessageSource {
     private static final String DEFAULT_LOCALE_CODE = "en";
 
     @NotNull
-    private MessageResourceDatabaseService service;
+    private MessageByLocaleDatabaseService service;
 
     @Autowired
-    public DBMessageResource(MessageResourceDatabaseService service) {
+    public DBMessageResource(MessageByLocaleDatabaseService service) {
         this.service = service;
     }
 

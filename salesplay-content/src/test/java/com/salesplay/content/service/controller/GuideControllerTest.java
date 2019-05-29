@@ -4,32 +4,35 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.salesplay.content.service.domain.*;
 import com.salesplay.content.service.dto.GuideDTO;
 import com.salesplay.content.service.dto.GuideMapper;
-import com.salesplay.content.service.exception.DuplicateResourceException;
 import com.salesplay.content.service.exception.ResourceNotFoundException;
 import com.salesplay.content.service.service.GuideDatabaseService;
-import com.salesplay.content.service.service.MessageResourceDatabaseService;
+import com.salesplay.content.service.service.MessageByLocaleDatabaseService;
 import com.salesplay.content.service.service.SiteLocaleDatabaseService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+
+import java.util.*;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
@@ -38,41 +41,48 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 @WebMvcTest(GuideController.class)
 @EnableSpringDataWebSupport
 @EnableWebMvc
 public class GuideControllerTest {
 
-    @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @Mock
     private GuideDatabaseService guideService;
 
-    @MockBean
-    private MessageResourceDatabaseService messageByLocaleService;
+    @Mock
+    private MessageByLocaleDatabaseService messageByLocaleDatabaseService;
 
-    @MockBean
+    private GuideController guideController;
+
+    @Mock
     private SiteLocaleDatabaseService siteLocaleDatabaseService;
 
-    @Autowired
-    private ObjectMapper mapper;
-
-    @MockBean
+    @InjectMocks
     private GuideMapper guideMapper;
 
+    @Autowired
+    private ObjectMapper mapper = new ObjectMapper();
+
+    private SiteLocale enLocale;
+
     private Guide guideMock;
-    private SiteLocale localeMock;
     private List<GuideTranslation> translations = new ArrayList<>();
     private GuideTranslation translationMock;
 
     @Before
     public void setUp() throws Exception {
-        localeMock = SiteLocale.of("English", "en", true, true);
-        translationMock = GuideTranslation.of(localeMock, "title", "subtitle", "overview");
-        translations.add(translationMock);
+        MockitoAnnotations.initMocks(this);
+        guideController = new GuideController(guideService, guideMapper);
+        this.mockMvc = MockMvcBuilders.standaloneSetup(guideController).build();
+
+        enLocale = SiteLocale.of("English", "en_US", true, true);
+        translationMock = GuideTranslation.of(enLocale, "title", "subtitle", "overview");
         guideMock = Guide.of("my-slug", EditorialStatus.PUBLISHED, Visibility.PUBLIC, "test.png");
+        translations.add(translationMock);
+        guideMock.addTranslations(translations);
     }
 
     @Test
@@ -162,13 +172,8 @@ public class GuideControllerTest {
     }
 
     @Test
-    public void shouldThrowDuplicateResourceExceptionWhenGuideAlreadyExists() throws DuplicateResourceException {
-        when(guideService.save(guideMock)).thenThrow(new DuplicateResourceException(guideMock.getSlug()));
-    }
-
-    @Test
     public void canUpdateAGuideWithValidInput() throws Exception {
-        when(guideService.update(guideMock)).thenReturn(guideMock);
+        when(guideService.save(guideMock)).thenReturn(guideMock);
         String actual = mapper.writeValueAsString(guideMock);
 
         ResultActions resultActions = mockMvc.perform(put("/guides").accept(MediaType.APPLICATION_JSON)
@@ -199,8 +204,11 @@ public class GuideControllerTest {
     @Test
     public void canPostGuideWithValidInput() throws Exception {
         when(guideService.save(guideMock)).thenReturn(guideMock);
+        when(siteLocaleDatabaseService.findByCode(enLocale.getCode())).thenReturn(Optional.of(enLocale));
 
-        String actual = mapper.writeValueAsString(guideMock);
+        GuideDTO guideDTO = guideMapper.mapToDto(guideMock);
+
+        String actual = mapper.writeValueAsString(guideDTO);
 
         ResultActions resultActions = mockMvc.perform(post("/guides")
                 .accept(MediaType.APPLICATION_JSON)
