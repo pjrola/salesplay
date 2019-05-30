@@ -4,10 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.salesplay.content.service.domain.SiteLocale;
 import com.salesplay.content.service.exception.DuplicateResourceException;
 import com.salesplay.content.service.exception.ResourceNotFoundException;
+import com.salesplay.content.service.service.MessageByLocaleDatabaseService;
 import com.salesplay.content.service.service.SiteLocaleDatabaseService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,9 @@ public class SiteLocaleControllerTest {
     private MockMvc mockMvc;
 
     private SiteLocale localeMock;
+
+    @MockBean
+    private MessageByLocaleDatabaseService messageByLocaleDatabaseService;
 
     @MockBean
     private SiteLocaleDatabaseService service;

@@ -35,6 +35,8 @@ import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -42,9 +44,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(MockitoJUnitRunner.class)
-@WebMvcTest(GuideController.class)
-@EnableSpringDataWebSupport
-@EnableWebMvc
 public class GuideControllerTest {
 
     private MockMvc mockMvc;
@@ -165,7 +164,9 @@ public class GuideControllerTest {
 
     @Test
     public void shouldThrowResourceNotFoundExceptionWhenFindBySlugGuideDoesNotExist() throws Exception {
-        when(guideService.findBySlug(guideMock.getSlug())).thenThrow(new ResourceNotFoundException(guideMock.getSlug()));
+        given(guideService.findBySlug(guideMock.getSlug())).willThrow(new ResourceNotFoundException(guideMock.getSlug()));
+
+        ///when(guideService.findBySlug(guideMock.getSlug())).thenThrow(new ResourceNotFoundException(guideMock.getSlug()));
 
         mockMvc.perform(get("/guides/slug/{slug}", guideMock.getSlug()))
                 .andExpect(status().isNotFound());
