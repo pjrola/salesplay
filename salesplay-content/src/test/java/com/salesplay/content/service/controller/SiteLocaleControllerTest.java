@@ -104,7 +104,7 @@ public class SiteLocaleControllerTest {
 
     @Test
     public void shouldThrowDuplicateResourceExceptionWhenLocaleAlreadyExists() throws DuplicateResourceException {
-        when(service.save(localeMock)).thenThrow(new DuplicateResourceException(localeMock.getCode()));
+        when(service.create(localeMock)).thenThrow(new DuplicateResourceException(localeMock.getCode()));
     }
 
     @Test
@@ -120,7 +120,7 @@ public class SiteLocaleControllerTest {
 
     @Test
     public void canPostLocaleWithValidInput() throws Exception {
-        when(service.save(localeMock)).thenReturn(localeMock);
+        when(service.create(localeMock)).thenReturn(localeMock);
 
         String actual = mapper.writeValueAsString(localeMock);
 

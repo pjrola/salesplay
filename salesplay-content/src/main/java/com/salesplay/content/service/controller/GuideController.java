@@ -3,6 +3,7 @@ package com.salesplay.content.service.controller;
 import com.salesplay.content.service.domain.Guide;
 import com.salesplay.content.service.dto.GuideDTO;
 import com.salesplay.content.service.dto.GuideMapper;
+import com.salesplay.content.service.exception.DuplicateResourceException;
 import com.salesplay.content.service.exception.ResourceNotFoundException;
 import com.salesplay.content.service.service.GuideDatabaseService;
 import lombok.extern.log4j.Log4j2;
@@ -51,15 +52,16 @@ public class GuideController {
     @PostMapping(RESOURCE_PATH)
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
-    public GuideDTO create(@Valid @RequestBody GuideDTO dto) {
+    public GuideDTO create(@Valid @RequestBody GuideDTO dto) throws DuplicateResourceException {
         Guide guide = mapper.mapFromDto(dto);
+        service.create(guide);
         return mapper.mapToDto(guide);
     }
 
     @PostMapping(RESOURCE_PATH + "/delete")
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@RequestBody List<Guide> guides) throws ResourceNotFoundException {
+    public void delete(@RequestBody List<Guide> guides) {
         service.deleteAll(guides);
     }
 
@@ -67,7 +69,7 @@ public class GuideController {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Guide update(@Valid @RequestBody Guide guide) throws ResourceNotFoundException {
-        return service.save(guide);
+        return service.update(guide);
     }
 
     @GetMapping(RESOURCE_PATH + "/{id}")

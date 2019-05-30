@@ -1,6 +1,7 @@
 package com.salesplay.content.service.domain;
 
 import com.google.common.collect.ImmutableList;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import javax.persistence.*;
@@ -15,11 +16,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Entity
 @ToString
 @Getter
+@EqualsAndHashCode
 @Table(name = "guides")
 public class Guide extends PersistentObject {
 
     @NotEmpty(message = "{guide.slug.notNull}")
-    @Column(name = "slug", nullable = false)
+    @Column(name = "slug", nullable = false, unique = true)
     private String slug;
 
     @Convert(converter = EditorialStatus.Converter.class)

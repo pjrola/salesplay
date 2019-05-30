@@ -33,20 +33,19 @@ public class MessageResourceController {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Page<MessageResource> findAll(Pageable pageable) {
-        log.info("findAll called with translations");
         return service.findAll(pageable);
     }
 
     @PostMapping(RESOURCE_PATH)
     @ResponseBody
     public ResponseEntity<MessageResource> create(@Valid @RequestBody MessageResource messageResource) throws DuplicateResourceException {
-        return new ResponseEntity<>(service.save(messageResource), HttpStatus.CREATED);
+        return new ResponseEntity<>(service.create(messageResource), HttpStatus.CREATED);
     }
 
     @PostMapping(RESOURCE_PATH + "/delete")
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@RequestBody List<MessageResource> messageResources) throws ResourceNotFoundException {
+    public void delete(@RequestBody List<MessageResource> messageResources) {
         service.deleteAll(messageResources);
     }
 
@@ -54,7 +53,7 @@ public class MessageResourceController {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public MessageResource update(@RequestBody MessageResource messageResource) throws ResourceNotFoundException {
-        return service.save(messageResource);
+        return service.update(messageResource);
     }
 
     @GetMapping(RESOURCE_PATH + "/{id}")

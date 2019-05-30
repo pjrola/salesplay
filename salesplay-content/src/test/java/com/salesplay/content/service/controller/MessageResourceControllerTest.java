@@ -105,7 +105,7 @@ public class MessageResourceControllerTest {
 
     @Test
     public void shouldThrowDuplicateResourceExceptionWhenLocaleAlreadyExists() throws DuplicateResourceException {
-        when(msgService.save(messageResource)).thenThrow(new DuplicateResourceException(messageResource.getKey()));
+        when(msgService.create(messageResource)).thenThrow(new DuplicateResourceException(messageResource.getKey()));
     }
 
     @Test
@@ -121,7 +121,7 @@ public class MessageResourceControllerTest {
 
     @Test
     public void canPostLocaleWithValidInput() throws Exception {
-        when(msgService.save(messageResource)).thenReturn(messageResource);
+        when(msgService.create(messageResource)).thenReturn(messageResource);
 
         String actual = mapper.writeValueAsString(messageResource);
 

@@ -39,13 +39,13 @@ public class SiteLocaleController {
     @PostMapping(RESOURCE_PATH)
     @ResponseBody
     public ResponseEntity<SiteLocale> create(@Valid @RequestBody SiteLocale locale) throws DuplicateResourceException {
-        return new ResponseEntity<>(service.save(locale), HttpStatus.CREATED);
+        return new ResponseEntity<>(service.create(locale), HttpStatus.CREATED);
     }
 
     @PostMapping(RESOURCE_PATH + "/delete")
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@RequestBody List<SiteLocale> locales) throws ResourceNotFoundException {
+    public void delete(@RequestBody List<SiteLocale> locales) {
         service.deleteAll(locales);
     }
 
@@ -53,7 +53,7 @@ public class SiteLocaleController {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public SiteLocale update(@RequestBody SiteLocale locale) throws ResourceNotFoundException {
-        return service.save(locale);
+        return service.update(locale);
     }
 
     @GetMapping(RESOURCE_PATH + "/{id}")

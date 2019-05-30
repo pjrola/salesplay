@@ -18,25 +18,18 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
 import java.util.*;
-
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -46,15 +39,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(MockitoJUnitRunner.class)
 public class GuideControllerTest {
 
+    @Autowired
     private MockMvc mockMvc;
 
     @Mock
     private GuideDatabaseService guideService;
 
     @Mock
-    private MessageByLocaleDatabaseService messageByLocaleDatabaseService;
-
-    private GuideController guideController;
+    private MessageByLocaleDatabaseService message;
 
     @Mock
     private SiteLocaleDatabaseService siteLocaleDatabaseService;
@@ -68,15 +60,19 @@ public class GuideControllerTest {
     private SiteLocale enLocale;
 
     private Guide guideMock;
+
+    private GuideController guideController;
+
     private List<GuideTranslation> translations = new ArrayList<>();
+
     private GuideTranslation translationMock;
 
     @Before
     public void setUp() throws Exception {
+        Locale.setDefault(new Locale("en"));
         MockitoAnnotations.initMocks(this);
         guideController = new GuideController(guideService, guideMapper);
         this.mockMvc = MockMvcBuilders.standaloneSetup(guideController).build();
-
         enLocale = SiteLocale.of("English", "en_US", true, true);
         translationMock = GuideTranslation.of(enLocale, "title", "subtitle", "overview");
         guideMock = Guide.of("my-slug", EditorialStatus.PUBLISHED, Visibility.PUBLIC, "test.png");
@@ -164,9 +160,7 @@ public class GuideControllerTest {
 
     @Test
     public void shouldThrowResourceNotFoundExceptionWhenFindBySlugGuideDoesNotExist() throws Exception {
-        given(guideService.findBySlug(guideMock.getSlug())).willThrow(new ResourceNotFoundException(guideMock.getSlug()));
-
-        ///when(guideService.findBySlug(guideMock.getSlug())).thenThrow(new ResourceNotFoundException(guideMock.getSlug()));
+        when(guideService.findBySlug(guideMock.getSlug())).thenThrow(new ResourceNotFoundException(guideMock.getSlug()));
 
         mockMvc.perform(get("/guides/slug/{slug}", guideMock.getSlug()))
                 .andExpect(status().isNotFound());
@@ -174,7 +168,7 @@ public class GuideControllerTest {
 
     @Test
     public void canUpdateAGuideWithValidInput() throws Exception {
-        when(guideService.save(guideMock)).thenReturn(guideMock);
+        when(guideService.update(guideMock)).thenReturn(guideMock);
         String actual = mapper.writeValueAsString(guideMock);
 
         ResultActions resultActions = mockMvc.perform(put("/guides").accept(MediaType.APPLICATION_JSON)
@@ -204,7 +198,7 @@ public class GuideControllerTest {
 
     @Test
     public void canPostGuideWithValidInput() throws Exception {
-        when(guideService.save(guideMock)).thenReturn(guideMock);
+        when(guideService.create(guideMock)).thenReturn(guideMock);
         when(siteLocaleDatabaseService.findByCode(enLocale.getCode())).thenReturn(Optional.of(enLocale));
 
         GuideDTO guideDTO = guideMapper.mapToDto(guideMock);

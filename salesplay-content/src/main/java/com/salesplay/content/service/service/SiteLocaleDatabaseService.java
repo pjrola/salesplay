@@ -1,6 +1,7 @@
 package com.salesplay.content.service.service;
 
 import com.salesplay.content.service.domain.SiteLocale;
+import com.salesplay.content.service.exception.DuplicateResourceException;
 import com.salesplay.content.service.exception.ResourceNotFoundException;
 import com.salesplay.content.service.repository.SiteLocaleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,21 @@ public class SiteLocaleDatabaseService implements SiteLocaleService {
         return repository.saveAll(locales);
     }
 
-    public SiteLocale save(SiteLocale locale) {
-        return repository.save(locale);
+    public SiteLocale create(SiteLocale siteLocale) throws DuplicateResourceException {
+        Optional<SiteLocale> duplicate = repository.findById(siteLocale.getId());
+
+        if (duplicate.isPresent()) {
+            throw new DuplicateResourceException(siteLocale.getId().toString());
+        }
+
+        return repository.save(siteLocale);
+    }
+
+    public SiteLocale update(SiteLocale siteLocale) throws ResourceNotFoundException {
+        repository.findById(siteLocale.getId()).orElseThrow(()
+                -> new ResourceNotFoundException(siteLocale.getId().toString()));
+
+        return repository.save(siteLocale);
     }
 
     public Page<SiteLocale> findAll(Pageable pageable) {
@@ -44,22 +58,28 @@ public class SiteLocaleDatabaseService implements SiteLocaleService {
     }
 
     public SiteLocale findById(Long id) throws ResourceNotFoundException {
-        return null;
+        return repository.findById(id).orElseThrow(()
+                -> new ResourceNotFoundException(id.toString()));
     }
 
     public void deleteById(Long id) throws ResourceNotFoundException {
-
+        SiteLocale locale = repository.findById(id).orElseThrow(()
+                -> new ResourceNotFoundException(id.toString()));
+        repository.deleteById(locale.getId());
     }
 
-    public void delete(SiteLocale type) throws ResourceNotFoundException {
-
+    public void delete(SiteLocale siteLocale) throws ResourceNotFoundException {
+        SiteLocale locale = repository.findById(siteLocale.getId()).orElseThrow(()
+                -> new ResourceNotFoundException(siteLocale.getId().toString()));
+        repository.delete(locale);
     }
 
     public void deleteAll() {
-
+        repository.deleteAll();
     }
 
-    public void deleteAll(Iterable<SiteLocale> types) {
-
+    public void deleteAll(Iterable<SiteLocale> locales) {
+        repository.deleteAll(locales);
     }
+
 }

@@ -12,7 +12,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 @Component
-public class GuideMapper {
+public class GuideMapper implements DTOMapper<Guide, GuideDTO> {
 
     private SiteLocaleDatabaseService service;
 
@@ -30,7 +30,7 @@ public class GuideMapper {
             throw new IllegalArgumentException("Invalid Locale");
         }
 
-        Optional<SiteLocale> siteLocale = service.findByCode("en_US");
+        Optional<SiteLocale> siteLocale = service.findByCode(locale.toString());
         Optional<GuideTranslation> translation = Optional.ofNullable(guide.getTranslationByLocale(locale.toString()));
 
         if (!siteLocale.isPresent() || !siteLocale.get().getIsEnabled()) {

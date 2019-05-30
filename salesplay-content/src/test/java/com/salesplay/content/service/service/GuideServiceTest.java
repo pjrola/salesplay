@@ -104,7 +104,7 @@ public class GuideServiceTest {
     @Test
     public void canSaveEntity() throws Exception {
         when(guideRepository.save(guideMock)).thenReturn(guideMock);
-        Guide result = guideDatabaseService.save(guideMock);
+        Guide result = guideDatabaseService.create(guideMock);
         assertEquals(guideMock, result);
         verify(guideRepository, times(1)).save(guideMock);
     }

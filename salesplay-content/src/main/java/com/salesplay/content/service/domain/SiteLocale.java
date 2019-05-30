@@ -1,5 +1,6 @@
 package com.salesplay.content.service.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 @Entity
 @Getter
+@EqualsAndHashCode
 @Table(name = "locales")
 public class SiteLocale extends PersistentObject {
 

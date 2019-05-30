@@ -1,7 +1,7 @@
 package com.salesplay.content.service.config;
 
 import com.salesplay.content.service.domain.MessageResource;
-import com.salesplay.content.service.service.MessageByLocaleDatabaseService;
+import com.salesplay.content.service.repository.MessageResourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.AbstractMessageSource;
 import org.springframework.stereotype.Component;
@@ -15,20 +15,19 @@ public class DBMessageResource extends AbstractMessageSource {
     private static final String DEFAULT_LOCALE_CODE = "en";
 
     @NotNull
-    private MessageByLocaleDatabaseService service;
+    private MessageResourceRepository repository;
 
     @Autowired
-    public DBMessageResource(MessageByLocaleDatabaseService service) {
-        this.service = service;
+    public DBMessageResource(MessageResourceRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     protected MessageFormat resolveCode(String key, Locale locale) {
-        MessageResource message = service.findByKeyAndLocale(key,locale.getLanguage());
+        MessageResource message = repository.findByKeyAndLocale(key,locale.getLanguage());
         if (message == null) {
-            message = service.findByKeyAndLocale(key, DEFAULT_LOCALE_CODE);
+            message = repository.findByKeyAndLocale(key, DEFAULT_LOCALE_CODE);
         }
         return new MessageFormat(message.getContent(), locale);
     }
-
 }
