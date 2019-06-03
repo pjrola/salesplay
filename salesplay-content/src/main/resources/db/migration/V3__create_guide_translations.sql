@@ -11,26 +11,25 @@ CREATE TABLE IF NOT EXISTS guide_translations (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO guide_translations (guide_id, locale_id, title, subtitle, overview) VALUES
-(1, 1,"Database-Stored Messages for I18n in Spring Boot","Learn how to write a new hello world guide", "overview"),
-(1, 2,"Database-Stored Messages for I18n in Spring Boot","Learn how to write a new hello world guide", "overview"),
+(1, 1,"Database-Stored Messages for I18n in Spring Boot","Learn how to localize messages in Spring Boot", "Having more alternatives is always good: In this post, we will explore the possibility of using a database to store localized messages in Spring Boot. For simplicity, we will use H2 as the database, Thymeleaf as the template engine and Spring Data JPA for repository support. We also use Maven to build the project. For this reason, we expect you have already obtained basic knowledge of Maven, Spring Boot, Thymeleaf, Spring Data JPA and H2."),
+(1, 2,"Database-Stored Messages for I18n in Spring Boot","Learn how to localize messages in Spring Boot", "Having more alternatives is always good: In this post, we will explore the possibility of using a database to store localized messages in Spring Boot. For simplicity, we will use H2 as the database, Thymeleaf as the template engine and Spring Data JPA for repository support. We also use Maven to build the project. For this reason, we expect you have already obtained basic knowledge of Maven, Spring Boot, Thymeleaf, Spring Data JPA and H2."),
 (1, 3,"アプリとWebサイトをローカライズするときにフォントを選択する方法","新しいHello Worldガイドの書き方を学ぶ", "概観"),
 (1, 4,"在Sketch for iOS国际化中设计应用程序","学习如何编写新的hello world指南", "概观"),
 (1, 5,"Bibliotecas para Angular I18N","Aprende a escribir una nueva guía de hello world.", "visión general"),
-
-(2, 1,"Database-Stored Messages for I18n in Spring Boot","Learn how to write a new hello world guide", "overview"),
-(2, 2,"Database-Stored Messages for I18n in Spring Boot","Learn how to write a new hello world guide", "overview"),
+(2, 1,"How to select fonts when localizing websites","Learn how to write localized websites",
+ "How do we pick fonts that both represent our brand and work together in multiple languages? In this post, we''ll explore both practical and aesthetic considerations when tackling this problem."),
+(2, 2,"How to select fonts when localizing websites","Learn how to write localized websites",
+ "How do we pick fonts that both represent our brand and work together in multiple languages? In this post, we''ll explore both practical and aesthetic considerations when tackling this problem."),
 (2, 3,"アプリとWebサイトをローカライズするときにフォントを選択する方法","新しいHello Worldガイドの書き方を学ぶ", "概観"),
 (2, 4,"在Sketch for iOS国际化中设计应用程序","学习如何编写新的hello world指南", "概观"),
 (2, 5,"Bibliotecas para Angular I18N","Aprende a escribir una nueva guía de hello world.", "visión general"),
-
-(3, 1,"Database-Stored Messages for I18n in Spring Boot","Learn how to write a new hello world guide", "overview"),
-(3, 2,"Database-Stored Messages for I18n in Spring Boot","Learn how to write a new hello world guide", "overview"),
+(3, 1,"Designing apps in sketch internationalization","Learn how to write a new hello world guide", "As we design iOS apps, we want to consider the impact internationalization can have on our UX and UI. This can give us designers more control over solutions to edge cases related to i18n. Here, we explore how to design iOS apps for i18n/l10n at the mockup stage, highlighting some Sketch features and plugins that can help us along the way."),
+(3, 2,"Designing apps in sketch internationalization","Learn how to write a new hello world guide", "As we design iOS apps, we want to consider the impact internationalization can have on our UX and UI. This can give us designers more control over solutions to edge cases related to i18n. Here, we explore how to design iOS apps for i18n/l10n at the mockup stage, highlighting some Sketch features and plugins that can help us along the way."),
 (3, 3,"アプリとWebサイトをローカライズするときにフォントを選択する方法","新しいHello Worldガイドの書き方を学ぶ", "概観"),
 (3, 4,"在Sketch for iOS国际化中设计应用程序","学习如何编写新的hello world指南", "概观"),
 (3, 5,"Bibliotecas para Angular I18N","Aprende a escribir una nueva guía de hello world.", "visión general"),
-
-(4, 1,"Database-Stored Messages for I18n in Spring Boot","Learn how to write a new hello world guide", "overview"),
-(4, 2,"Database-Stored Messages for I18n in Spring Boot","Learn how to write a new hello world guide", "overview"),
+(4, 1,"Best libraries for angular for I18n in Spring Boot","Learn how to write a new hello world guide", "Having more alternatives is always good: In this post, we will explore the possibility of using a database to store localized messages in Spring Boot. For simplicity, we will use H2 as the database, Thymeleaf as the template engine and Spring Data JPA for repository support. We also use Maven to build the project. For this reason, we expect you have already obtained basic knowledge of Maven, Spring Boot, Thymeleaf, Spring Data JPA and H2."),
+(4, 2,"Best libraries for angular for I18n in Spring Boot","Learn how to write a new hello world guide", "Having more alternatives is always good: In this post, we will explore the possibility of using a database to store localized messages in Spring Boot. For simplicity, we will use H2 as the database, Thymeleaf as the template engine and Spring Data JPA for repository support. We also use Maven to build the project. For this reason, we expect you have already obtained basic knowledge of Maven, Spring Boot, Thymeleaf, Spring Data JPA and H2."),
 (4, 3,"アプリとWebサイトをローカライズするときにフォントを選択する方法","新しいHello Worldガイドの書き方を学ぶ", "概観"),
 (4, 4,"在Sketch for iOS国际化中设计应用程序","学习如何编写新的hello world指南", "概观"),
 (4, 5,"Bibliotecas para Angular I18N","Aprende a escribir una nueva guía de hello world.", "visión general");
