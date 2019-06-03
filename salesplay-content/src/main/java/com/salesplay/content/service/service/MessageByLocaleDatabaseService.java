@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.Locale;
-import java.util.Optional;
 
 @Service
 public class MessageByLocaleDatabaseService implements MessageByLocaleService {
@@ -41,9 +40,8 @@ public class MessageByLocaleDatabaseService implements MessageByLocaleService {
     }
 
     public MessageResource create(MessageResource resource) throws DuplicateResourceException {
-        Optional<MessageResource> duplicate = repository.findById(resource.getId());
 
-        if (duplicate.isPresent()) {
+        if (repository.existsById(resource.getId())) {
             throw new DuplicateResourceException(resource.getId().toString());
         }
 
@@ -51,8 +49,9 @@ public class MessageByLocaleDatabaseService implements MessageByLocaleService {
     }
 
     public MessageResource update(MessageResource resource) throws ResourceNotFoundException {
-        repository.findById(resource.getId()).orElseThrow(()
-                -> new ResourceNotFoundException(resource.getId().toString()));
+        if (!repository.existsById(resource.getId())) {
+            throw new ResourceNotFoundException(resource.getId().toString());
+        }
 
         return repository.save(resource);
     }

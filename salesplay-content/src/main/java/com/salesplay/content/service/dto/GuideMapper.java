@@ -7,35 +7,27 @@ import com.salesplay.content.service.service.SiteLocaleDatabaseService;
 import org.apache.commons.lang.LocaleUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.stereotype.Component;
 import java.util.Locale;
 import java.util.Optional;
 
-@Component
 public class GuideMapper implements DTOMapper<Guide, GuideDTO> {
 
+    @Autowired
     private SiteLocaleDatabaseService service;
 
     private GuideDTO dto = new GuideDTO();
 
-    @Autowired
-    public GuideMapper(SiteLocaleDatabaseService service) {
-        this.service = service;
-    }
+    public GuideMapper() {}
 
     public GuideDTO mapToDto(Guide guide) {
         Locale locale = LocaleContextHolder.getLocale();
-
-        if (!LocaleUtils.isAvailableLocale(locale)) {
-            throw new IllegalArgumentException("Invalid Locale");
-        }
-
         Optional<SiteLocale> siteLocale = service.findByCode(locale.toString());
-        Optional<GuideTranslation> translation = Optional.ofNullable(guide.getTranslationByLocale(locale.toString()));
 
-        if (!siteLocale.isPresent() || !siteLocale.get().getIsEnabled()) {
+        if (!LocaleUtils.isAvailableLocale(locale) || (!siteLocale.isPresent() || !siteLocale.get().getIsEnabled())) {
             throw new IllegalArgumentException("Locale Not Found or Disabled");
         }
+
+        Optional<GuideTranslation> translation = Optional.ofNullable(guide.getTranslationByLocale(locale.toString()));
 
         if (translation.isPresent()) {
             dto.setTitle(translation.get().getTitle());

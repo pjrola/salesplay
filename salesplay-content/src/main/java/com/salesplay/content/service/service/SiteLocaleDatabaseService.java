@@ -33,9 +33,8 @@ public class SiteLocaleDatabaseService implements SiteLocaleService {
     }
 
     public SiteLocale create(SiteLocale siteLocale) throws DuplicateResourceException {
-        Optional<SiteLocale> duplicate = repository.findById(siteLocale.getId());
 
-        if (duplicate.isPresent()) {
+        if (repository.existsById(siteLocale.getId())) {
             throw new DuplicateResourceException(siteLocale.getId().toString());
         }
 
@@ -43,8 +42,9 @@ public class SiteLocaleDatabaseService implements SiteLocaleService {
     }
 
     public SiteLocale update(SiteLocale siteLocale) throws ResourceNotFoundException {
-        repository.findById(siteLocale.getId()).orElseThrow(()
-                -> new ResourceNotFoundException(siteLocale.getId().toString()));
+        if (!repository.existsById(siteLocale.getId())) {
+            throw new ResourceNotFoundException(siteLocale.getId().toString());
+        }
 
         return repository.save(siteLocale);
     }
@@ -53,9 +53,10 @@ public class SiteLocaleDatabaseService implements SiteLocaleService {
         return repository.findAll(pageable);
     }
 
-    public Iterable findAllById(Iterable ids) {
+    public Iterable<Long> findAllById(Iterable ids) {
         return repository.findAllById(ids);
     }
+
 
     public SiteLocale findById(Long id) throws ResourceNotFoundException {
         return repository.findById(id).orElseThrow(()

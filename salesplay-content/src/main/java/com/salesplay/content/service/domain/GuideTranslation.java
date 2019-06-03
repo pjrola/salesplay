@@ -3,12 +3,13 @@ package com.salesplay.content.service.domain;
 import lombok.Getter;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 import java.util.Objects;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Getter
 @Embeddable
-public class GuideTranslation {
+public class GuideTranslation implements Serializable {
 
     @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "locale_id", referencedColumnName="id")

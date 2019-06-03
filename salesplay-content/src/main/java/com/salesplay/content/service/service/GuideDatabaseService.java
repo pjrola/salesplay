@@ -39,8 +39,9 @@ public class GuideDatabaseService implements GuideService {
     }
 
     public Guide update(Guide guide) throws ResourceNotFoundException {
-        repository.findById(guide.getId()).orElseThrow(()
-                -> new ResourceNotFoundException(guide.getId().toString()));
+        if (!repository.existsById(guide.getId())) {
+            throw new ResourceNotFoundException(guide.getId().toString());
+        }
 
         return repository.save(guide);
     }

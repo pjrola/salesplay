@@ -11,22 +11,21 @@ import com.salesplay.content.service.service.SiteLocaleDatabaseService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpHeaders;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import java.util.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -36,32 +35,33 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringRunner.class)
+@WebMvcTest(GuideController.class)
+@EnableSpringDataWebSupport
+@EnableWebMvc
 public class GuideControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @Mock
+    @MockBean
     private GuideDatabaseService guideService;
 
-    @Mock
+    @MockBean
     private MessageByLocaleDatabaseService message;
 
-    @Mock
+    @MockBean
     private SiteLocaleDatabaseService siteLocaleDatabaseService;
 
-    @InjectMocks
+    @Autowired
     private GuideMapper guideMapper;
 
     @Autowired
-    private ObjectMapper mapper = new ObjectMapper();
+    private ObjectMapper mapper;
 
     private SiteLocale enLocale;
 
     private Guide guideMock;
-
-    private GuideController guideController;
 
     private List<GuideTranslation> translations = new ArrayList<>();
 
@@ -69,10 +69,6 @@ public class GuideControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        Locale.setDefault(new Locale("en"));
-        MockitoAnnotations.initMocks(this);
-        guideController = new GuideController(guideService, guideMapper);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(guideController).build();
         enLocale = SiteLocale.of("English", "en_US", true, true);
         translationMock = GuideTranslation.of(enLocale, "title", "subtitle", "overview");
         guideMock = Guide.of("my-slug", EditorialStatus.PUBLISHED, Visibility.PUBLIC, "test.png");
@@ -90,22 +86,35 @@ public class GuideControllerTest {
         Page<Guide> pagedResponse = new PageImpl(guides);
 
         when(guideService.findAll(PageRequest.of(0, 20))).thenReturn(pagedResponse);
+        when(siteLocaleDatabaseService.findByCode(enLocale.getCode())).thenReturn(Optional.of(enLocale));
 
         mockMvc.perform(get("/guides"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 
                 .andExpect(jsonPath("$.content", hasSize(3)))
+                .andExpect(jsonPath("$.content[0].locale", is(enLocale.getCode())))
+                .andExpect(jsonPath("$.content[0].title", is(translationMock.getTitle())))
+                .andExpect(jsonPath("$.content[0].subtitle", is(translationMock.getSubtitle())))
+                .andExpect(jsonPath("$.content[0].overview", is(translationMock.getOverview())))
                 .andExpect(jsonPath("$.content[0].editorialStatus", is(guideMock.getEditorialStatus().getValue())))
                 .andExpect(jsonPath("$.content[0].image", is(guideMock.getImage())))
                 .andExpect(jsonPath("$.content[0].slug", is(guideMock.getSlug())))
                 .andExpect(jsonPath("$.content[0].visibility", is(guideMock.getVisibility().getValue())))
 
+                .andExpect(jsonPath("$.content[1].locale", is(enLocale.getCode())))
+                .andExpect(jsonPath("$.content[1].title", is(translationMock.getTitle())))
+                .andExpect(jsonPath("$.content[1].subtitle", is(translationMock.getSubtitle())))
+                .andExpect(jsonPath("$.content[1].overview", is(translationMock.getOverview())))
                 .andExpect(jsonPath("$.content[1].editorialStatus", is(guideMock.getEditorialStatus().getValue())))
                 .andExpect(jsonPath("$.content[1].image", is(guideMock.getImage())))
                 .andExpect(jsonPath("$.content[1].slug", is(guideMock.getSlug())))
                 .andExpect(jsonPath("$.content[1].visibility", is(guideMock.getVisibility().getValue())))
 
+                .andExpect(jsonPath("$.content[2].locale", is(enLocale.getCode())))
+                .andExpect(jsonPath("$.content[2].title", is(translationMock.getTitle())))
+                .andExpect(jsonPath("$.content[2].subtitle", is(translationMock.getSubtitle())))
+                .andExpect(jsonPath("$.content[2].overview", is(translationMock.getOverview())))
                 .andExpect(jsonPath("$.content[2].editorialStatus", is(guideMock.getEditorialStatus().getValue())))
                 .andExpect(jsonPath("$.content[2].image", is(guideMock.getImage())))
                 .andExpect(jsonPath("$.content[2].slug", is(guideMock.getSlug())))

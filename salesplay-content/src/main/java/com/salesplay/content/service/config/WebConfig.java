@@ -1,5 +1,6 @@
 package com.salesplay.content.service.config;
 
+import com.salesplay.content.service.dto.GuideMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +35,11 @@ public class WebConfig implements WebMvcConfigurer {
         CookieLocaleResolver resolver = new CookieLocaleResolver();
         resolver.setDefaultLocale(Locale.US);
         return resolver;
+    }
+
+    @Bean
+    GuideMapper guideMapper() {
+        return new GuideMapper();
     }
 
     @Bean

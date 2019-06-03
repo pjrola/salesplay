@@ -5,7 +5,7 @@ import com.salesplay.content.service.exception.ResourceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface CrudService<T, ID> {
+public interface CrudService<T, I> {
     Iterable<T> saveAll(Iterable<T> types);
 
     T create(T type) throws DuplicateResourceException;
@@ -14,11 +14,11 @@ public interface CrudService<T, ID> {
 
     Page<T> findAll(Pageable pageable);
 
-    Iterable findAllById(Iterable ids);
+    Iterable<Long> findAllById(Iterable ids);
 
-    T findById(Long id) throws ResourceNotFoundException;
+    T findById(I id) throws ResourceNotFoundException;
 
-    void deleteById(Long id) throws ResourceNotFoundException;
+    void deleteById(I id) throws ResourceNotFoundException;
 
     void delete(T type) throws ResourceNotFoundException;
 
