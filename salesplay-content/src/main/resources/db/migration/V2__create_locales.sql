@@ -11,7 +11,8 @@ CREATE TABLE locales (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO locales (name, code, is_default, is_enabled) VALUES
-('English', 'en', 1, 1),
+('English', 'en', 0, 1),
+('English', 'en_US', 1, 1),
 ('Japanese', 'ja', 0, 1),
 ('Chinese', 'zh_CN', 0, 1),
 ('Spanish', 'es', 0, 0),

@@ -21,11 +21,11 @@ public class GuideMapper implements DTOMapper<Guide, GuideDTO> {
         Locale locale = LocaleContextHolder.getLocale();
         Optional<SiteLocale> siteLocale = service.findByCode(locale.toString());
 
-        if (!LocaleUtils.isAvailableLocale(locale) || (!siteLocale.isPresent() || !siteLocale.get().getIsEnabled())) {
-            throw new IllegalArgumentException("Locale Not Found or Disabled");
+        if (!siteLocale.isPresent() || !siteLocale.get().getIsEnabled()) {
+            siteLocale = Optional.ofNullable(service.findByIsDefaultTrue());
         }
 
-        Optional<GuideTranslation> translation = Optional.ofNullable(guide.getTranslationByLocale(locale.toString()));
+        Optional<GuideTranslation> translation = Optional.ofNullable(guide.getTranslationByLocale(siteLocale.get().getCode()));
 
         if (translation.isPresent()) {
             dto.setTitle(translation.get().getTitle());
