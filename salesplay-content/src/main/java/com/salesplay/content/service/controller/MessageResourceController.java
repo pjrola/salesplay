@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -17,7 +16,7 @@ import java.util.List;
 
 @Log4j2
 @RestController
-public class MessageResourceController {
+public class MessageResourceController implements CrudController<MessageResource> {
 
     private static final String RESOURCE_PATH = "/messageResources";
 
@@ -38,8 +37,9 @@ public class MessageResourceController {
 
     @PostMapping(RESOURCE_PATH)
     @ResponseBody
-    public ResponseEntity<MessageResource> create(@Valid @RequestBody MessageResource messageResource) throws DuplicateResourceException {
-        return new ResponseEntity<>(service.create(messageResource), HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public MessageResource create(@Valid @RequestBody MessageResource messageResource) throws DuplicateResourceException {
+        return service.create(messageResource);
     }
 
     @PostMapping(RESOURCE_PATH + "/delete")
@@ -61,6 +61,13 @@ public class MessageResourceController {
     @ResponseBody
     public MessageResource findById(@PathVariable(value = "id") Long translationId) throws ResourceNotFoundException {
         return service.findById(translationId);
+    }
+
+    @DeleteMapping(RESOURCE_PATH + "/{id}")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
+        service.deleteById(id);
     }
 
 }

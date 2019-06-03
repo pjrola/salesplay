@@ -6,6 +6,7 @@ import com.salesplay.content.service.exception.DuplicateResourceException;
 import com.salesplay.content.service.exception.ResourceNotFoundException;
 import com.salesplay.content.service.service.MessageByLocaleDatabaseService;
 import com.salesplay.content.service.service.SiteLocaleDatabaseService;
+import com.sun.corba.se.spi.ior.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +28,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -140,4 +143,13 @@ public class MessageResourceControllerTest {
         );
     }
 
+    @Test
+    public void canDeleteById() throws Exception {
+        when(msgService.findById(1L)).thenReturn(messageResource);
+
+        mockMvc.perform(delete(RESOURCE_PATH + "/{id}", 1L)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+    }
 }

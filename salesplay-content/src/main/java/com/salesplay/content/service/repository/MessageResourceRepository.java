@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MessageResourceRepository extends PagingAndSortingRepository<MessageResource, Long> {
     MessageResource findByKeyAndLocale(String key, String locale);
+    Boolean existsByKeyAndLocale(String key, String locale);
 }

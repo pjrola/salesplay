@@ -41,8 +41,8 @@ public class MessageByLocaleDatabaseService implements MessageByLocaleService {
 
     public MessageResource create(MessageResource resource) throws DuplicateResourceException {
 
-        if (repository.existsById(resource.getId())) {
-            throw new DuplicateResourceException(resource.getId().toString());
+        if (existsByKeyAndLocale(resource.getKey(), resource.getLocale())) {
+            throw new DuplicateResourceException(resource.getKey());
         }
 
         return repository.save(resource);
@@ -60,7 +60,7 @@ public class MessageByLocaleDatabaseService implements MessageByLocaleService {
         return repository.findAll(pageable);
     }
 
-    public Iterable findAllById(Iterable ids) {
+    public Iterable<Long> findAllById(Iterable ids) {
         return repository.findAllById(ids);
     }
 
@@ -87,5 +87,9 @@ public class MessageByLocaleDatabaseService implements MessageByLocaleService {
 
     public void deleteAll(Iterable<MessageResource> resources) {
         repository.deleteAll(resources);
+    }
+
+    public Boolean existsByKeyAndLocale(String key, String locale) {
+        return repository.existsByKeyAndLocale(key, locale);
     }
 }

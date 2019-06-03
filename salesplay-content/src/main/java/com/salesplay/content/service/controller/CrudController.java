@@ -5,7 +5,7 @@ import com.salesplay.content.service.exception.ResourceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface BaseController<T> {
+public interface CrudController<T> {
     T create(T entity) throws DuplicateResourceException;
 
     Page<T> findAll(Pageable pageable);
