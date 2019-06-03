@@ -12,15 +12,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Table(name = "resource_messages")
 public class MessageResource extends PersistentObject {
 
-    @NotBlank(message = "{translation.slug.notNull}")
+    @NotBlank(message = "{messageResource.locale.notNull}")
     @Column(name = "locale", nullable = false)
     private String locale;
 
-    @NotBlank(message = "{translation.key.notNull}")
+    @NotBlank(message = "{messageResource.key.notNull}")
     @Column(name = "messagekey", nullable = false, unique = true)
     private String key;
 
-    @NotBlank(message = "{translation.content.notNull}")
+    @NotBlank(message = "{messageResource.content.notNull}")
     @Column(name = "messagecontent", nullable = false)
     private String content;
 

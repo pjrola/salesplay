@@ -6,7 +6,6 @@ import com.salesplay.content.service.exception.DuplicateResourceException;
 import com.salesplay.content.service.exception.ResourceNotFoundException;
 import com.salesplay.content.service.service.MessageByLocaleDatabaseService;
 import com.salesplay.content.service.service.SiteLocaleDatabaseService;
-import com.sun.corba.se.spi.ior.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,8 +27,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -151,5 +148,29 @@ public class MessageResourceControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void shouldThrowDuplicateResourceExceptionWhenCreating() throws Exception {
+        when(msgService.create(messageResource)).thenThrow(new DuplicateResourceException(messageResource.getKey()));
+
+        String actual = mapper.writeValueAsString(messageResource);
+
+        mockMvc.perform(post(RESOURCE_PATH)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(actual))
+                .andExpect(status().isConflict());
+    }
+
+    @Test
+    public void shouldExpectBadRequestWhenCreatingEntityWithInvalidInput() throws Exception {
+        when(msgService.create(messageResource)).thenReturn(messageResource);
+
+         mockMvc.perform(post(RESOURCE_PATH)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{}"))
+                .andExpect(status().isBadRequest());
     }
 }
