@@ -15,11 +15,9 @@ public class GuideMapper implements DTOMapper<Guide, GuideDTO> {
     @Autowired
     private SiteLocaleDatabaseService service;
 
-    private GuideDTO dto = new GuideDTO();
-
-    public GuideMapper() {}
-
     public GuideDTO mapToDto(Guide guide) {
+        GuideDTO dto = new GuideDTO();
+
         Locale locale = LocaleContextHolder.getLocale();
         Optional<SiteLocale> siteLocale = service.findByCode(locale.toString());
 

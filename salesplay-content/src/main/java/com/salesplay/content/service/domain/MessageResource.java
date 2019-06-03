@@ -2,12 +2,14 @@ package com.salesplay.content.service.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Entity
 @Getter
+@Setter
 @EqualsAndHashCode
 @Table(name = "resource_messages")
 public class MessageResource extends PersistentObject {

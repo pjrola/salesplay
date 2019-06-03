@@ -173,4 +173,25 @@ public class MessageResourceControllerTest {
                 .content("{}"))
                 .andExpect(status().isBadRequest());
     }
+
+    @Test
+    public void canUpdateLocaleWithValidPUT() throws Exception {
+        when(msgService.update(messageResource)).thenReturn(messageResource);
+
+        String actual = mapper.writeValueAsString(messageResource);
+
+        ResultActions resultActions = mockMvc.perform(put(RESOURCE_PATH)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(actual))
+                .andExpect(status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+
+        JSONAssert.assertEquals(
+                contentAsString, actual,
+                JSONCompareMode.LENIENT
+        );
+    }
 }
