@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Col, Row } from 'reactstrap';
 import { withTranslation } from 'react-i18next';
-import {AppSwitch} from "@coreui/react";
+import { AppSwitch } from "@coreui/react";
 
 class Settings extends Component {
 

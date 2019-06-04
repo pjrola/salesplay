@@ -39,9 +39,10 @@ public class SiteLocaleDatabaseService implements SiteLocaleService {
     }
 
     public SiteLocale create(SiteLocale siteLocale) throws DuplicateResourceException {
+        Optional<SiteLocale> existing = repository.findByCode(siteLocale.getCode());
 
-        if (repository.existsById(siteLocale.getId())) {
-            throw new DuplicateResourceException(siteLocale.getId().toString());
+        if (existing.isPresent()) {
+            throw new DuplicateResourceException(siteLocale.getCode());
         }
 
         return repository.save(siteLocale);

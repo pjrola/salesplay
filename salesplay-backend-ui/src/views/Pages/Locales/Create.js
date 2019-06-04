@@ -27,7 +27,7 @@ class Create extends Component {
 
   onSubmit = (values, { setSubmitting, setErrors }) => {
     console.log(values);
-    this.props.createGuide(values, this.props.history);
+    this.props.createLocale(values, this.props.history);
     setSubmitting(false);
   };
 
