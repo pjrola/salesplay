@@ -1,0 +1,72 @@
+{
+  "general": {
+    "404": {
+      "title": "Page not found",
+      "subtext": "Oops! Something went wrong and we couldn't find the page you were looking for."
+    }
+  },
+  "layout": {
+    "sidebar": {
+      "dashboard": "Instrumententafel",
+      "resources": "Ressourcen",
+      "marketing": "Marketing",
+      "media": "Medien",
+      "downloads": "Downloads",
+      "manage": "VERWALTEN",
+      "accounts": "Konten",
+      "system": "System",
+      "cloud": "Wolke",
+      "analytics": "Analytics",
+      "localization": "Lokalisierung",
+      "notifications": "Benachrichtigungen",
+      "guides" : "Guides",
+      "webinars" : "Webinars",
+      "content_slots" : "Content Slots",
+      "content_assets" : "Content Assets",
+      "trial_editions" : "Trial Editions",
+      "trial_downloads" : "Trial Downloads",
+      "administrators" : "Administrators",
+      "users" : "Users",
+      "roles" : "Roles",
+      "permissions" : "Permissions",
+      "settings" : "Settings",
+      "locations" : "Locations",
+      "instances" : "Instances",
+      "templates" : "Templates",
+      "reports" : "Reports",
+      "locales" : "Locales",
+      "alerts" : "Alerts",
+      "tags" : "Tags"
+    },
+    "header" : {
+      "account": "Konto",
+      "messages" : "Mitteilungen",
+      "comments" : "Bemerkungen",
+      "profile" : "Profil",
+      "preferences" : "Einstellungen",
+      "logout" : "Ausloggen"
+    }
+  },
+  "pages" : {
+    "guide": {
+      "operations" : {
+        "action": "Aktionen",
+        "add": "Neue hinzufügen",
+        "delete" : "Löschen",
+        "duplicate" : "Duplikat",
+        "archive" : "Archiv"
+      },
+      "list" : {
+        "no_results" : "Keine Ergebnisse gefunden",
+        "loading": "Wird geladen...",
+        "header": {
+          "title" : "Titel",
+          "slug" : "Schnecke",
+          "last_edit": "Bearbeitet von",
+          "status" : "Status",
+          "created" : "Erstellt"
+        }
+      }
+    }
+  }
+}

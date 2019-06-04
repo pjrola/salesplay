@@ -1,0 +1,8 @@
+// If you want to override variables do it here
+@import "variables";
+@import "vendors/variables";
+@import "~@coreui/coreui-pro/scss/coreui.scss";
+@import "~@coreui/coreui-pro/scss/_dropdown-menu-right.scss";
+@import "custom";
+@import "ie-fix";
+@import "fixes";

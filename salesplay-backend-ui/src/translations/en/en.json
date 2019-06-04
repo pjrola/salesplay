@@ -1,0 +1,128 @@
+{
+  "general": {
+    "404": {
+      "title": "Page not found",
+      "subtext": "Oops! Something went wrong and we couldn't find the page you were looking for."
+    },
+    "edit_status" : {
+      "draft" : "Draft",
+      "review" : "Review",
+      "published" : "Published",
+      "archived" : "Archived"
+    },
+    "visibility" : {
+      "public" : "Public",
+      "private" : "Private"
+    },
+    "actions" : {
+      "save" : "Save",
+      "delete" : "Delete",
+      "update" : "Update"
+    }
+  },
+  "layout": {
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "resources": "Resources",
+      "marketing": "Marketing",
+      "media": "Media",
+      "downloads": "Downloads",
+      "manage" : "Manage",
+      "accounts": "Accounts",
+      "system": "System",
+      "cloud": "Cloud",
+      "analytics": "Analytics",
+      "localization": "Localization",
+      "notifications": "Notifications",
+      "guides" : "Guides",
+      "webinars" : "Webinars",
+      "content_slots" : "Content Slots",
+      "content_assets" : "Content Assets",
+      "trial_editions" : "Trial Editions",
+      "trial_downloads" : "Trial Downloads",
+      "administrators" : "Administrators",
+      "users" : "Users",
+      "roles" : "Roles",
+      "permissions" : "Permissions",
+      "settings" : "Settings",
+      "locations" : "Locations",
+      "instances" : "Instances",
+      "templates" : "Templates",
+      "reports" : "Reports",
+      "locales" : "Locales",
+      "alerts" : "Alerts",
+      "tags" : "Tags"
+    },
+    "header" : {
+      "account": "Account",
+      "messages" : "Messages",
+      "comments" : "Comments",
+      "profile" : "Profile",
+      "preferences" : "Preferences",
+      "logout" : "Logout",
+      "locale": {
+        "en": "English",
+        "de": "Deutsche",
+        "ja": "日本人",
+        "cn": "中文 (简体)",
+        "fr": "Français"
+      }
+    }
+  },
+  "pages" : {
+    "guide": {
+      "operations" : {
+        "action": "Actions",
+        "add": "Add New",
+        "delete" : "Delete",
+        "duplicate" : "Duplicate",
+        "archive" : "Archive"
+      },
+      "list" : {
+        "no_results" : "There is no data to display",
+        "loading": "Loading...",
+        "header": {
+          "title" : "Title",
+          "slug" : "Slug",
+          "last_edit": "Last Edited By",
+          "status" : "Status",
+          "created" : "Created At"
+        }
+      },
+      "tab" : {
+        "guide" : "Guide",
+        "steps" : "Steps",
+        "settings" : "Settings",
+        "meta" : "Meta"
+      },
+      "form" : {
+        "main" : {
+          "label" : {
+            "status": "Edit Status",
+            "visibility": "Visibility",
+            "title": "Title",
+            "subtitle": "Subtitle",
+            "slug": "Slug",
+            "card_image": "Card Image",
+            "overview": "Overview"
+          }
+        },
+        "settings" : {
+
+        },
+        "meta" : {
+
+        }
+      }
+    },
+    "login": {
+      "form": {
+        "title" : "Sign In",
+        "username_label" : "Username",
+        "password_label" : "Password",
+        "submit": "Login",
+        "forgot_password" : "Trouble signing in?"
+      }
+    }
+  }
+}
