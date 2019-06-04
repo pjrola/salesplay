@@ -6,19 +6,27 @@ import Error from "../../../components/Error/Error";
 import { compose } from 'redux';
 import {Button} from "reactstrap";
 import { Link } from "react-router-dom";
+import {deleteLocales, fetchLocales} from "../../../actions/locales-actions";
+
+const mapStateToProps = state => ({
+  locales: state.locales.items,
+  loading: state.locales.loading,
+  error: state.locales.error
+});
+
+const mapActionsToProps  = {
+  fetchLocales: fetchLocales,
+  deleteLocales: deleteLocales
+};
 
 class Index extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
-
+    this.props.fetchLocales();
   }
 
   render() {
-    const { error, loading, guides, t } = this.props;
+    const { error, loading, locales, t } = this.props;
 
     if (error) {
       return <>
@@ -35,12 +43,16 @@ class Index extends Component {
 
     return (
       <div className="animated fadeIn">
-        Locales
+        { JSON.stringify(locales) }
       </div>
     );
   }
 }
 
 export default compose(
+  connect(
+    mapStateToProps,
+    mapActionsToProps
+  ),
   withTranslation()
 )(Index);

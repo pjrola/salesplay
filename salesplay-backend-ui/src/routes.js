@@ -6,7 +6,6 @@ const GuidePage = React.lazy(() => import('./views/Pages/Guides/Index'));
 const Guide = React.lazy(() => import('./views/Pages/Guides/Create'));
 const GuideDetailsPage = React.lazy(() => import('./views/Pages/Guides/Update'));
 const GuideGroupPage = React.lazy(() => import('./views/Pages/Guides/Groups/Index'));
-const WebinarList = React.lazy(() => import('./views/Pages/Webinars/Index'));
 const Webinar = React.lazy(() => import('./views/Pages/Webinars/Webinar'));
 const TagList = React.lazy(() => import('./views/Pages/Tags/TagList'));
 const Tag = React.lazy(() => import('./views/Pages/Tags/Tag'));
@@ -23,9 +22,7 @@ const routes = [
   { path: '/content/guide/list', name: 'GuidePage', component: GuidePage },
   { path: '/content/guide/create', name: 'Guide', component: Guide },
   { path: '/content/guide/update/:id', exact: true, name: 'Guide Details', component: GuideDetailsPage },
-
   { path: '/content/guide/groups/list', name: 'Guide Groups', component: GuideGroupPage },
-
   { path: '/content/locales/list', name: 'Locales', component: LocalePage },
   { path: '/content/messages/list', name: 'Messages', component: MessagePage },
   { path: '/content/webinar', name: 'Webinar', component: Webinar },

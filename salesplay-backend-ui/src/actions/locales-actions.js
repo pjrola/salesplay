@@ -1,10 +1,10 @@
 export const API_REQUEST_BEGIN   = 'locales:api_request_begin';
 export const FETCH_LOCALES_SUCCESS = 'locales:fetch_locales_success';
-export const POST_LOCALES_SUCCESS = 'locales:post_guide_success';
+export const POST_LOCALES_SUCCESS = 'locales:post_locale_success';
 export const API_ERROR = 'locales:api_error';
 export const DELETE_LOCALES_SUCCESS = 'locales:delete_locales_success';
 export const UPDATE_LOCALES_SUCCESS  = 'locales:update_locales_success';
-export const FIND_GUIDE_SUCCESS = 'locales:find_guide_by_id_success';
+export const FIND_LOCALE_SUCCESS = 'locales:find_locale_by_id_success';
 const serviceDownError = 'Failed to connect to service';
 
 const baseUrl = 'http://localhost:9999/api/v1/locales';
@@ -39,7 +39,7 @@ export const updateLocaleSuccess = locales => ({
 });
 
 export const findLocaleByIdSuccess = locales => ({
-  type: FIND_GUIDE_SUCCESS,
+  type: FIND_LOCALE_SUCCESS,
   payload: { locales }
 });
 

@@ -10,6 +10,7 @@ import * as serviceWorker from './serviceWorker';
 import { applyMiddleware, compose ,combineReducers, createStore } from "redux";
 import { Provider } from "react-redux";
 import guidesReducer from './reducers/guides-reducer';
+import localesReducer from './reducers/locales-reducer';
 import adminsReducer from "./reducers/admins-reducer";
 import thunk from 'redux-thunk';
 import pseudoLocalization from 'pseudo-localization';
@@ -35,6 +36,7 @@ const rootReducer = (state, action) => {
 
 const allReducers = combineReducers({
   guides: guidesReducer,
+  locales: localesReducer,
   admin: adminsReducer
 });
 
