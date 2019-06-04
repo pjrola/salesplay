@@ -173,8 +173,13 @@ class SideNav extends Component {
           children: [
             {
               name: t('layout.sidebar.locales'),
-              url: '/icons/coreui-icons',
+              url: '/content/locales/list',
               icon: 'fa fa-globe',
+            },
+            {
+              name: t('layout.sidebar.messaging'),
+              url: '/content/messages/list',
+              icon: 'fa fa-language',
             }
           ],
         },

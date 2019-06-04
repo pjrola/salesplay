@@ -14,8 +14,9 @@ const ContentAssetList = React.lazy(() => import('./views/Pages/ContentAssets/Co
 const ContentAsset = React.lazy(() => import('./views/Pages/ContentAssets/ContentAsset'));
 const ContentSlotList = React.lazy(() => import('./views/Pages/ContentSlots/ContentSlotList'));
 const ContentSlot = React.lazy(() => import('./views/Pages/ContentSlots/ContentSlot'));
+const LocalePage = React.lazy(() => import('./views/Pages/Locales/Index'));
+const MessagePage = React.lazy(() => import('./views/Pages/Messages/Index'));
 
-// https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home', component: DefaultLayout },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
@@ -25,7 +26,8 @@ const routes = [
 
   { path: '/content/guide/groups/list', name: 'Guide Groups', component: GuideGroupPage },
 
-  { path: '/content/webinars', name: 'Webinars', component: WebinarList },
+  { path: '/content/locales/list', name: 'Locales', component: LocalePage },
+  { path: '/content/messages/list', name: 'Messages', component: MessagePage },
   { path: '/content/webinar', name: 'Webinar', component: Webinar },
   { path: '/content/tags', name: 'Tag', component: TagList },
   { path: '/content/tag', name: 'Tag', component: Tag },

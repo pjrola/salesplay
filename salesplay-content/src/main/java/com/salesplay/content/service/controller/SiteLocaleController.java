@@ -62,4 +62,11 @@ public class SiteLocaleController {
     public SiteLocale findById(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
         return service.findById(id);
     }
+
+    @GetMapping(RESOURCE_PATH + "/enabled")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<SiteLocale> findByEnabled() throws ResourceNotFoundException {
+        return service.findAllByIsEnabledTrue();
+    }
 }
