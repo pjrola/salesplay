@@ -12,6 +12,7 @@ import { Provider } from "react-redux";
 import guidesReducer from './reducers/guides-reducer';
 import localesReducer from './reducers/locales-reducer';
 import adminsReducer from "./reducers/admins-reducer";
+import messagesReducer from "./reducers/messages-reducer";
 import thunk from 'redux-thunk';
 import pseudoLocalization from 'pseudo-localization';
 import {CLEAR_PREVIOUS_ERROR} from './actions/root-actions'
@@ -36,6 +37,7 @@ const rootReducer = (state, action) => {
 
 const allReducers = combineReducers({
   guides: guidesReducer,
+  messages: messagesReducer,
   locales: localesReducer,
   admin: adminsReducer
 });
