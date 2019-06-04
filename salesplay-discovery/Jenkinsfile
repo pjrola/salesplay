@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+    stages {
+        stage('Compile Stage'){
+            steps {
+                sh "./gradlew clean build"
+            }
+        }
+        stage('Testing Staging') {
+            steps {
+                sh "./gradlew test"
+            }
+        }
+        stage('Create Docker File') {
+            steps {
+                sh "./gradlew createDockerfile"
+            }
+        }
+        stage('Create Image') {
+            steps {
+                sh "./gradlew buildImage"
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh "./gradlew pushImage"
+            }
+        }
+    }
+}
