@@ -31,7 +31,7 @@ class RowItem extends Component {
             </div>
           </td>
           <td>
-            <div>{guide.translations[0].title}</div>
+            <div>{guide.title}</div>
             <div className="small text-muted">
               Author: prola | Url: <Link to={{ pathname: '/content/guide/update/' + guide.id }}>view</Link>
             </div>

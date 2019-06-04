@@ -116,6 +116,13 @@
         }
       }
     },
+    "locale": {
+      "operations" : {
+        "action": "Actions",
+        "add": "Add New",
+        "delete" : "Delete"
+      }
+    },
     "login": {
       "form": {
         "title" : "Sign In",

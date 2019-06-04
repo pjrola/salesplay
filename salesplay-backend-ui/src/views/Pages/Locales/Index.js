@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import Loader from "../../../components/Loading/Loader";
 import Error from "../../../components/Error/Error";
 import { compose } from 'redux';
-import {Button} from "reactstrap";
+import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
-import {deleteLocales, fetchLocales} from "../../../actions/locales-actions";
+import { deleteLocales, fetchLocales } from "../../../actions/locales-actions";
 
 const mapStateToProps = state => ({
   locales: state.locales.items,
@@ -30,9 +30,9 @@ class Index extends Component {
 
     if (error) {
       return <>
-        <Link to="/content/guide/create">
+        <Link to="/content/locales/create">
           <Button color="primary float-left">
-            <i className="fa fa-plus"></i>&nbsp;{t('pages.guide.operations.add')}
+            <i className="fa fa-plus"></i>&nbsp;{t('pages.locale.operations.add')}
           </Button>
         </Link>
         <Error error={error}/>
@@ -43,7 +43,12 @@ class Index extends Component {
 
     return (
       <div className="animated fadeIn">
-        { JSON.stringify(locales) }
+        <Link to="/content/locales/create">
+          <Button color="primary float-left">
+            <i className="fa fa-plus"></i>&nbsp;{t('pages.locale.operations.add')}
+          </Button>
+        </Link>
+        <div>{ JSON.stringify(locales) }</div>
       </div>
     );
   }

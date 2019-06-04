@@ -4,6 +4,7 @@ import DefaultLayout from './containers/DefaultLayout';
 const Dashboard = React.lazy(() => import('./views/Pages/Dashboard'));
 const GuidePage = React.lazy(() => import('./views/Pages/Guides/Index'));
 const Guide = React.lazy(() => import('./views/Pages/Guides/Create'));
+const Locale = React.lazy(() => import('./views/Pages/Locales/Create'));
 const GuideDetailsPage = React.lazy(() => import('./views/Pages/Guides/Update'));
 const GuideGroupPage = React.lazy(() => import('./views/Pages/Guides/Groups/Index'));
 const Webinar = React.lazy(() => import('./views/Pages/Webinars/Webinar'));
@@ -24,6 +25,7 @@ const routes = [
   { path: '/content/guide/update/:id', exact: true, name: 'Guide Details', component: GuideDetailsPage },
   { path: '/content/guide/groups/list', name: 'Guide Groups', component: GuideGroupPage },
   { path: '/content/locales/list', name: 'Locales', component: LocalePage },
+  { path: '/content/locales/create', name: 'Locales', component: Locale },
   { path: '/content/messages/list', name: 'Messages', component: MessagePage },
   { path: '/content/webinar', name: 'Webinar', component: Webinar },
   { path: '/content/tags', name: 'Tag', component: TagList },
