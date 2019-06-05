@@ -16,6 +16,7 @@ const ContentSlotList = React.lazy(() => import('./views/Pages/ContentSlots/Cont
 const ContentSlot = React.lazy(() => import('./views/Pages/ContentSlots/ContentSlot'));
 const LocalePage = React.lazy(() => import('./views/Pages/Locales/Index'));
 const MessagePage = React.lazy(() => import('./views/Pages/Messages/Index'));
+const Message = React.lazy(() => import('./views/Pages/Messages/Create'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home', component: DefaultLayout },
@@ -27,6 +28,7 @@ const routes = [
   { path: '/content/locales/list', name: 'Locales', component: LocalePage },
   { path: '/content/locales/create', name: 'Locales', component: Locale },
   { path: '/content/messages/list', name: 'Messages', component: MessagePage },
+  { path: '/content/message/create', name: 'Messages', component: Message },
   { path: '/content/webinar', name: 'Webinar', component: Webinar },
   { path: '/content/tags', name: 'Tag', component: TagList },
   { path: '/content/tag', name: 'Tag', component: Tag },

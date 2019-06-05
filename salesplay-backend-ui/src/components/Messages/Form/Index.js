@@ -4,17 +4,19 @@ import { withTranslation } from 'react-i18next';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup'
 import LaddaButton, { EXPAND_LEFT } from 'react-ladda';
-import i18next from 'i18next';
 import { AppSwitch } from "@coreui/react";
 
 const validationSchema = function (values) {
   return Yup.object().shape({
-    name: Yup.string()
+    locale: Yup.string()
       .min(2, 'Invalid Length')
       .required('Locale Name is required'),
-    code: Yup.string()
+    key: Yup.string()
       .min(2, 'Invalid Length')
-      .required('ISO Code is required')
+      .required('Message Key is required'),
+    content: Yup.string()
+      .min(2, 'Invalid Length')
+      .required('Message Content is required')
   })
 };
 
@@ -46,8 +48,7 @@ class Index extends Component {
     this.touchAll = this.touchAll.bind(this);
 
     this.state = {
-      expLeft: false,
-      lng: i18next.language,
+      expLeft: false
     }
   }
 
@@ -68,17 +69,16 @@ class Index extends Component {
   }
 
   validateForm (errors) {
-    this.findFirstError('localeForm', (fieldName) => {
+    this.findFirstError('messageForm', (fieldName) => {
       return Boolean(errors[fieldName])
     })
   }
 
   touchAll(setTouched, errors) {
     setTouched({
-      name: true,
-      code: true,
-      isDefault: true,
-      isEnabled: true
+      locale: true,
+      key: true,
+      content: true,
     });
     this.validateForm(errors)
   }
@@ -89,7 +89,7 @@ class Index extends Component {
     return (
       <div className="animated fadeIn">
         <Formik
-          initialValues={this.props.locale}
+          initialValues={this.props.message}
           validate={validate(validationSchema)}
           onSubmit={this.props.onSubmit}
           render={
@@ -108,7 +108,7 @@ class Index extends Component {
                setTouched,
                setFieldValue
              }) => (
-              <Form onSubmit={handleSubmit} noValidate name='localeForm'>
+              <Form onSubmit={handleSubmit} noValidate name='messageForm'>
                  <Row>
                   <Col xs="12" md="12" lg="6">
                     <Card>
@@ -117,51 +117,65 @@ class Index extends Component {
                           <Col xs="12">
                             <div className="aside-options mb-3">
                               <div className="clearfix mt-2">
-                                <small className="ml-2"><b>Default</b></small>
+                                <small className="ml-2"><b>Translation Verified</b></small>
                                 <AppSwitch className={'float-left'} variant={'pill'} label color={'success'} size={'lg'}/>
                               </div>
                               <div className="mt-2">
-                                <small className="text-muted">Primary locale for site content</small>
+                                <small className="text-muted">Translator verified translation</small>
                               </div>
                             </div>
                             <div className="aside-options mb-3">
                               <div className="clearfix mt-2">
-                                <small className="ml-2"><b>Enabled</b></small>
+                                <small className="ml-2"><b>Translation Excluded</b></small>
                                 <AppSwitch className={'float-left'} variant={'pill'} label color={'success'} size={'lg'}/>
                               </div>
                               <div className="mt-2">
-                                <small className="text-muted">Enables content localization for specified locale</small>
+                                <small className="text-muted">Excluded from translation</small>
                               </div>
                             </div>
                             <FormGroup>
-                              <Label htmlFor="status">Locale Name</Label>
+                              <Label htmlFor="status">Locale</Label>
                               <Input type="text"
-                                     name="name"
+                                     name="locale"
                                      autoComplete="off"
-                                     id="name"
-                                     valid={!errors.name}
-                                     invalid={touched.name && !!errors.name}
+                                     id="locale"
+                                     valid={!errors.locale}
+                                     invalid={touched.locale && !!errors.locale}
                                      required
-                                     placeholder={"e.g. English"}
+                                     placeholder={"e.g. en"}
                                      onChange={handleChange}
                                      onBlur={handleBlur}
-                                     value={values.name} />
-                              <FormFeedback>{errors.name}</FormFeedback>
+                                     value={values.locale} />
+                              <FormFeedback>{errors.locale}</FormFeedback>
                             </FormGroup>
                             <FormGroup>
-                              <Label htmlFor="status">ISO 639 Code</Label>
+                              <Label htmlFor="status">Message Key</Label>
                               <Input type="text"
-                                     name="code"
+                                     name="key"
                                      autoComplete="off"
-                                     id="code"
-                                     valid={!errors.code}
-                                     invalid={touched.code && !!errors.code}
+                                     id="key"
+                                     valid={!errors.key}
+                                     invalid={touched.key && !!errors.key}
                                      required
-                                     placeholder={"e.g. en_US"}
+                                     placeholder={"e.g. validation.error.msg"}
                                      onChange={handleChange}
                                      onBlur={handleBlur}
-                                     value={values.code} />
-                              <FormFeedback>{errors.code}</FormFeedback>
+                                     value={values.key} />
+                              <FormFeedback>{errors.key}</FormFeedback>
+                            </FormGroup>
+                            <FormGroup>
+                              <Label htmlFor="status">Message Content</Label>
+                              <Input type="textarea"
+                                     name="content"
+                                     autoComplete="off"
+                                     id="content"
+                                     valid={!errors.content}
+                                     invalid={touched.content && !!errors.content}
+                                     required
+                                     onChange={handleChange}
+                                     onBlur={handleBlur}
+                                     value={values.content} />
+                              <FormFeedback>{errors.content}</FormFeedback>
                             </FormGroup>
                           </Col>
                         </Row>
@@ -191,10 +205,10 @@ class Index extends Component {
 }
 
 Index.defaultProps = {
-  locale: {
-    name: "",
-    code: "",
-    locale: i18next.language
+  message: {
+    locale: "",
+    key: "",
+    content: ""
   }
 };
 

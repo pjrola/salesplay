@@ -73,7 +73,7 @@ export function createMessage(data, history) {
     }).then(handleErrors)
       .then(json => {
         dispatch(postMessagesSuccess(json));
-        history.push('/content/message/list');
+        history.push('/content/messages/list');
         return json;
       })
       .catch(error => {
