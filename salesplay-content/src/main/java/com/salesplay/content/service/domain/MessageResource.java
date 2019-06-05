@@ -27,10 +27,10 @@ public class MessageResource extends PersistentObject {
     private String content;
 
     @Column(name = "verified")
-    private Boolean verified;
+    private Boolean verified = false;
 
     @Column(name = "excluded")
-    private Boolean excluded;
+    private Boolean excluded = false;
 
     protected MessageResource(){}
 
@@ -46,8 +46,6 @@ public class MessageResource extends PersistentObject {
         checkNotNull(locale);
         checkNotNull(key);
         checkNotNull(content);
-        checkNotNull(verified);
-        checkNotNull(excluded);
         return new MessageResource(locale, key, content, verified, excluded);
     }
 }
