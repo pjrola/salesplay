@@ -7,6 +7,7 @@ import { compose } from 'redux';
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { deleteMessages, fetchMessages } from "../../../actions/messages-actions";
+import CrudTable from "../../../components/Messages/List/Table";
 
 const mapStateToProps = state => ({
   messages: state.messages.items,
@@ -23,6 +24,10 @@ class Index extends Component {
 
   componentDidMount() {
     this.props.fetchMessages();
+  }
+
+  onDelete(items) {
+    this.props.deleteMessages(items);
   }
 
   render() {
@@ -48,7 +53,7 @@ class Index extends Component {
             <i className="fa fa-plus"></i>&nbsp;{t('pages.guide.operations.add')}
           </Button>
         </Link>
-        { JSON.stringify(messages) }
+        <CrudTable items={messages} onDelete={this.onDelete}/>
       </div>
     );
   }

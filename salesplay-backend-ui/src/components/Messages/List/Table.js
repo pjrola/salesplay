@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import {Table, Row, Col, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input} from 'reactstrap';
 import NoResults from '../../Table/NoResults';
-import RowItem from "../../Locales/List/RowItem";
+import RowItem from "../../Messages/List/RowItem";
 
 class CrudTable extends Component {
 
@@ -143,10 +143,11 @@ class CrudTable extends Component {
                   </div>
                 </div>
               </th>
-              <th className="text-center">Name</th>
-              <th className="text-center">Code</th>
-              <th className="text-center">Enabled</th>
-              <th className="text-center">Default</th>
+              <th>Locale</th>
+              <th>Translation Verified</th>
+              <th>Translation Excluded</th>
+              <th>Key</th>
+              <th>Resource Message</th>
               <th className="text-center">{t('pages.guide.list.header.created')}</th>
               <th className="text-center">Updated</th>
             </tr>
