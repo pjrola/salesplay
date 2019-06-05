@@ -133,6 +133,11 @@ class SideNav extends Component {
               url: '/widgets',
               icon: 'fa fa-globe',
             },
+            {
+              name: t('layout.sidebar.health'),
+              url: '/widgets',
+              icon: 'fa fa-heartbeat',
+            },
           ],
         },
         {

@@ -52,7 +52,8 @@
       "locales" : "Locales",
       "alerts" : "Alerts",
       "tags" : "Tags",
-      "messaging": "Site Messaging"
+      "messaging": "Site Messaging",
+      "health" : "Health"
     },
     "header" : {
       "account": "Account",
