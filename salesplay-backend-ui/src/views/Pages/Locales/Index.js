@@ -7,6 +7,7 @@ import { compose } from 'redux';
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { deleteLocales, fetchLocales } from "../../../actions/locales-actions";
+import CrudTable from "../../../components/Locales/List/Table";
 
 const mapStateToProps = state => ({
   locales: state.locales.items,
@@ -23,6 +24,10 @@ class Index extends Component {
 
   componentDidMount() {
     this.props.fetchLocales();
+  }
+
+  onDelete(locales) {
+    this.props.deleteLocales(locales);
   }
 
   render() {
@@ -48,7 +53,7 @@ class Index extends Component {
             <i className="fa fa-plus"></i>&nbsp;{t('pages.locale.operations.add')}
           </Button>
         </Link>
-        <div>{ JSON.stringify(locales) }</div>
+        <CrudTable items={locales} onDelete={this.onDelete}/>
       </div>
     );
   }

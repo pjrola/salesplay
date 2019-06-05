@@ -12,8 +12,6 @@ class RowItem extends Component {
       checkedListAll
     } = this.props;
 
-    console.log(guide);
-
     return (
         <tr >
           <td className="text-center">
