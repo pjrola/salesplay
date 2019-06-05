@@ -5,6 +5,7 @@ import { Form, Formik } from 'formik';
 import * as Yup from 'yup'
 import LaddaButton, { EXPAND_LEFT } from 'react-ladda';
 import { AppSwitch } from "@coreui/react";
+import CardHeader from "reactstrap/es/CardHeader";
 
 const validationSchema = function (values) {
   return Yup.object().shape({
@@ -112,6 +113,9 @@ class Index extends Component {
                  <Row>
                   <Col xs="12" md="12" lg="6">
                     <Card>
+                      <CardHeader>
+                        <strong>New Message</strong>
+                      </CardHeader>
                       <CardBody>
                         <Row>
                           <Col xs="12">
@@ -121,7 +125,7 @@ class Index extends Component {
                                 <AppSwitch className={'float-left'} variant={'pill'} label color={'success'} size={'lg'}/>
                               </div>
                               <div className="mt-2">
-                                <small className="text-muted">Translator verified translation</small>
+                                <small className="text-muted">Translator has verified translation</small>
                               </div>
                             </div>
                             <div className="aside-options mb-3">
@@ -130,7 +134,7 @@ class Index extends Component {
                                 <AppSwitch className={'float-left'} variant={'pill'} label color={'success'} size={'lg'}/>
                               </div>
                               <div className="mt-2">
-                                <small className="text-muted">Excluded from translation</small>
+                                <small className="text-muted">Excluded from automatic translation</small>
                               </div>
                             </div>
                             <FormGroup>

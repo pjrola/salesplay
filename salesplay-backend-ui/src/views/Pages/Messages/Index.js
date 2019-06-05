@@ -23,6 +23,7 @@ const mapActionsToProps  = {
 class Index extends Component {
 
   componentDidMount() {
+    this.onDelete = this.onDelete.bind(this);
     this.props.fetchMessages();
   }
 
