@@ -40,8 +40,6 @@ public class SiteLocale extends PersistentObject {
     public static SiteLocale of(String name, String code, Boolean isDefault, Boolean isEnabled) {
         checkNotNull(name);
         checkNotNull(code);
-        checkNotNull(isDefault);
-        checkNotNull(isEnabled);
         return new SiteLocale(name, code, isDefault, isEnabled);
     }
 }
