@@ -5,6 +5,7 @@ export const API_ERROR = 'locales:api_error';
 export const DELETE_LOCALES_SUCCESS = 'locales:delete_locales_success';
 export const UPDATE_LOCALES_SUCCESS  = 'locales:update_locales_success';
 export const FIND_LOCALE_SUCCESS = 'locales:find_locale_by_id_success';
+export const FIND_ENABLED_LOCALES_SUCCESS = 'locales:find_locale_by_enabled_success';
 const serviceDownError = 'Failed to connect to service';
 
 const baseUrl = 'http://localhost:9999/api/v1/locales';
@@ -40,6 +41,11 @@ export const updateLocaleSuccess = locales => ({
 
 export const findLocaleByIdSuccess = locales => ({
   type: FIND_LOCALE_SUCCESS,
+  payload: { locales }
+});
+
+export const findLocaleByEnabledSuccess = locales => ({
+  type: FIND_ENABLED_LOCALES_SUCCESS,
   payload: { locales }
 });
 
@@ -135,6 +141,24 @@ export function findLocaleById(id) {
       .then(handleErrors)
       .then(json => {
         dispatch(findLocaleByIdSuccess(json));
+        return json;
+      })
+      .catch(error => {
+        if (isServiceDown(error.message)) {
+          error.status = serviceDownError;
+        }
+        dispatch(apiRequestFailure(error));
+      });
+  };
+}
+
+export function findLocaleByEnabled() {
+  return dispatch => {
+    dispatch(apiRequestBegin());
+    return fetch(baseUrl + "/enabled")
+      .then(handleErrors)
+      .then(json => {
+        dispatch(findLocaleByEnabledSuccess(json));
         return json;
       })
       .catch(error => {

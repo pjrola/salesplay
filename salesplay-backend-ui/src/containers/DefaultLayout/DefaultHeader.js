@@ -27,7 +27,7 @@ class DefaultHeader extends Component {
         window.location.reload();
       });
     });
-  }
+  };
 
   toggle(i) {
     const newArray = this.state.dropdownOpen.map((element, index) => { return (index === i ? !element : false); });
@@ -36,8 +36,26 @@ class DefaultHeader extends Component {
     });
   }
 
+  List(list) {
+    if (!list) {
+      return null;
+    }
+
+    if (!list.length) {
+      return <p>Locales not enabled</p>;
+    } else {
+      return (
+        <>
+          {list.map(item =>
+            <DropdownItem key={item.id} onClick={(e) => this.changeLanguage(item.code, e)}>{item.name}</DropdownItem>
+          )}
+        </>
+      );
+    }
+  }
+
   render() {
-    const { t, currentUser } = this.props;
+    const { t, currentUser, locales } = this.props;
     return (
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none sidebar-toggle" aria-label="side bar toggle" role="button" display="md" mobile />
@@ -55,11 +73,7 @@ class DefaultHeader extends Component {
                 <i className={'flag-icon flag-icon-' + this.state.lng}></i>
               </DropdownToggle>
               <DropdownMenu>
-                <DropdownItem onClick={(e) => this.changeLanguage('en', e)}>{t('layout.header.locale.en')}</DropdownItem>
-                <DropdownItem onClick={(e) => this.changeLanguage('de', e)}>{t('layout.header.locale.de')}</DropdownItem>
-                <DropdownItem onClick={(e) => this.changeLanguage('ja', e)}>{t('layout.header.locale.ja')}</DropdownItem>
-                <DropdownItem onClick={(e) => this.changeLanguage('cn', e)}>{t('layout.header.locale.cn')}</DropdownItem>
-                <DropdownItem onClick={(e) => this.changeLanguage('fr', e)}>{t('layout.header.locale.fr')}</DropdownItem>
+                {this.List(locales)}
               </DropdownMenu>
             </ButtonDropdown>
           </NavItem>

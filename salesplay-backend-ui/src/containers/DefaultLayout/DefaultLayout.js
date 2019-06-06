@@ -7,6 +7,7 @@ import SideNav from "../../SideNav";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { logout } from "../../actions/admin-actions";
+import { findLocaleByEnabled } from "../../actions/locales-actions";
 import { clearPreviousErrors } from "../../actions/root-actions";
 import AuthService from '../../services/auth';
 
@@ -22,8 +23,15 @@ import {
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 const auth = new AuthService();
 
+const mapStateToProps = state => ({
+  locales: state.locales.items,
+  loading: state.locales.loading,
+  error: state.locales.error
+});
+
 const mapActionsToProps  = {
   logout: logout,
+  findLocaleByEnabled: findLocaleByEnabled,
   clearPreviousErrors: clearPreviousErrors
 };
 
@@ -33,6 +41,7 @@ class DefaultLayout extends Component {
     this.unlisten = this.props.history.listen((location, action) => {
       this.props.clearPreviousErrors();
     });
+    this.props.findLocaleByEnabled();
   }
   componentWillUnmount() {
     this.unlisten();
@@ -53,7 +62,7 @@ class DefaultLayout extends Component {
       <div className="app">
         <AppHeader fixed>
           <Suspense  fallback={this.loading()}>
-            <DefaultHeader onLogout={e=>this.signOut(e)} currentUser={auth.getProfile().name}/>
+            <DefaultHeader locales={this.props.locales} onLogout={e=>this.signOut(e)} currentUser={auth.getProfile().name}/>
           </Suspense>
         </AppHeader>
         <div className="app-body">
@@ -95,7 +104,7 @@ class DefaultLayout extends Component {
 
 export default compose(
   connect(
-    null,
+    mapStateToProps,
     mapActionsToProps
   ),
   withTranslation()

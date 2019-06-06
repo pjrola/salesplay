@@ -5,7 +5,8 @@ import {
   POST_LOCALES_SUCCESS,
   DELETE_LOCALES_SUCCESS,
   UPDATE_LOCALES_SUCCESS,
-  FIND_LOCALE_SUCCESS
+  FIND_LOCALE_SUCCESS,
+  FIND_ENABLED_LOCALES_SUCCESS
 } from '../actions/locales-actions';
 
 const initialState = {
@@ -33,6 +34,12 @@ export default function localesReducer(state = initialState, action) {
         items: action.payload.locales
       };
     case FIND_LOCALE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        items: action.payload.locales
+      };
+    case FIND_ENABLED_LOCALES_SUCCESS:
       return {
         ...state,
         loading: false,
