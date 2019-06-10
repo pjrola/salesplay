@@ -27,9 +27,7 @@ Sentry.init({
 
 const rootReducer = (state, action) => {
   if (action.type === CLEAR_PREVIOUS_ERROR) {
-    state = {
-      error: null
-    };
+    state.error = null;
   }
   return allReducers(state, action)
 };

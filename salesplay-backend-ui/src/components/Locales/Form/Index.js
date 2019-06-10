@@ -8,11 +8,15 @@ import i18next from 'i18next';
 import { AppSwitch } from "@coreui/react";
 
 const validationSchema = function (values) {
+  const alpha = /^[a-zA-Z_]+( [a-zA-Z_]+)*$/;
+
   return Yup.object().shape({
     name: Yup.string()
+      .matches(alpha, {message: "Enter Valid Name", excludeEmptyString: true })
       .min(2, 'Invalid Length')
       .required('Locale Name is required'),
     code: Yup.string()
+      .matches(alpha, {message: "Enter Valid Code", excludeEmptyString: true })
       .min(2, 'Invalid Length')
       .required('ISO Code is required')
   })
@@ -47,7 +51,10 @@ class Index extends Component {
 
     this.state = {
       expLeft: false,
-      lng: i18next.language,
+      isDefault: false,
+      isEnabled: false,
+      name: "",
+      code: "",
     }
   }
 
@@ -76,9 +83,7 @@ class Index extends Component {
   touchAll(setTouched, errors) {
     setTouched({
       name: true,
-      code: true,
-      isDefault: true,
-      isEnabled: true
+      code: true
     });
     this.validateForm(errors)
   }
@@ -89,7 +94,7 @@ class Index extends Component {
     return (
       <div className="animated fadeIn">
         <Formik
-          initialValues={this.props.locale}
+          initialValues={this.state}
           validate={validate(validationSchema)}
           onSubmit={this.props.onSubmit}
           render={
@@ -109,7 +114,7 @@ class Index extends Component {
                setFieldValue
              }) => (
               <Form onSubmit={handleSubmit} noValidate name='localeForm'>
-                 <Row>
+                <Row>
                   <Col xs="12" md="12" lg="6">
                     <Card>
                       <CardBody>
@@ -118,7 +123,13 @@ class Index extends Component {
                             <div className="aside-options mb-3">
                               <div className="clearfix mt-2">
                                 <small className="ml-2"><b>Default</b></small>
-                                <AppSwitch className={'float-left'} variant={'pill'} label color={'success'} size={'lg'}/>
+                                <AppSwitch
+                                  name="isDefault"
+                                  value={this.state.isDefault.toString()}
+                                  checked={this.state.isDefault}
+                                  onChange={() => this.toggle('isDefault')}
+                                  className={'float-left'}
+                                  variant={'pill'} label color={'success'} size={'lg'}/>
                               </div>
                               <div className="mt-2">
                                 <small className="text-muted">Primary locale for site content</small>
@@ -127,7 +138,16 @@ class Index extends Component {
                             <div className="aside-options mb-3">
                               <div className="clearfix mt-2">
                                 <small className="ml-2"><b>Enabled</b></small>
-                                <AppSwitch className={'float-left'} variant={'pill'} label color={'success'} size={'lg'}/>
+                                <AppSwitch
+                                  name="isEnabled"
+                                  value={this.state.isEnabled.toString()}
+                                  className={'float-left'}
+                                  variant={'pill'}
+                                  onChange={() => this.toggle('isEnabled')}
+                                  label
+                                  checked={this.state.isEnabled}
+                                  color={'success'}
+                                  size={'lg'}/>
                               </div>
                               <div className="mt-2">
                                 <small className="text-muted">Enables content localization for specified locale</small>
@@ -189,13 +209,5 @@ class Index extends Component {
     )
   }
 }
-
-Index.defaultProps = {
-  locale: {
-    name: "",
-    code: "",
-    locale: i18next.language
-  }
-};
 
 export default withTranslation()(Index);
