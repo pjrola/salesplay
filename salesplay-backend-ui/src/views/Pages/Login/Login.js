@@ -4,7 +4,7 @@ import { Card, CardBody, CardGroup, Col, Container, Row } from 'reactstrap';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { login } from "../../../actions/admin-actions";
+import { login } from "../../../actions/auth-actions";
 
 const mapStateToProps = state => ({
   admin: state.admin

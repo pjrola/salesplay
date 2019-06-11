@@ -1,4 +1,4 @@
-import { UNAUTHENTICATED, AUTHENTICATED, AUTHENTICATION_ERROR } from "../actions/admin-actions";
+import { UNAUTHENTICATED, AUTHENTICATED, AUTHENTICATION_ERROR } from "../actions/auth-actions";
 
 export default function adminsReducer(state = [], { type, payload }) {
   switch (type) {

@@ -31,7 +31,7 @@ class RowItem extends Component {
           <td>
             <div>{guide.title}</div>
             <div className="small text-muted">
-              Author: prola | Url: <Link to={{ pathname: '/content/guide/update/' + guide.id }}>view</Link>
+              Author: prola | Url: <Link to={{ pathname: '/resources/guide/update/' + guide.id }}>view</Link>
             </div>
           </td>
           <td className="text-center">

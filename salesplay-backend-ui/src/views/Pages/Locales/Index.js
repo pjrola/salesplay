@@ -36,7 +36,7 @@ class Index extends Component {
 
     if (error) {
       return <>
-        <Link to="/content/locales/create">
+        <Link to="/resources/locales/create">
           <Button color="primary float-left">
             <i className="fa fa-plus"></i>&nbsp;{t('pages.locale.operations.add')}
           </Button>
@@ -49,7 +49,7 @@ class Index extends Component {
 
     return (
       <div className="animated fadeIn">
-        <Link to="/content/locales/create">
+        <Link to="/resources/locales/create">
           <Button color="primary float-left">
             <i className="fa fa-plus"></i>&nbsp;{t('pages.locale.operations.add')}
           </Button>

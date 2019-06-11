@@ -25,27 +25,27 @@ class SideNav extends Component {
           children: [
             {
               name: t('layout.sidebar.guides'),
-              url: '/content/guide/list',
+              url: '/resources/guide/list',
               icon: 'fa fa-leaf',
             },
             {
               name: 'Guide Groups',
-              url: '/content/guide/groups/list',
+              url: '/resources/guide/groups/list',
               icon: 'fa fa-leaf'
             },
             {
               name: 'Learning Paths',
-              url: '/content/webinars',
+              url: '/resources/webinars',
               icon: 'fa fa-play-circle'
             },
             {
               name: t('layout.sidebar.webinars'),
-              url: '/content/webinars',
+              url: '/resources/webinars',
               icon: 'fa fa-play-circle'
             },
             {
               name: t('layout.sidebar.tags'),
-              url: '/content/tags',
+              url: '/resources/tags',
               icon: 'fa fa-tags',
             },
           ]
@@ -178,12 +178,12 @@ class SideNav extends Component {
           children: [
             {
               name: t('layout.sidebar.locales'),
-              url: '/content/locales/list',
+              url: '/resources/locales/list',
               icon: 'fa fa-globe',
             },
             {
               name: t('layout.sidebar.messaging'),
-              url: '/content/messages/list',
+              url: '/resources/messages/list',
               icon: 'fa fa-language',
             }
           ],

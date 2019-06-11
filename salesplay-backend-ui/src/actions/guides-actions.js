@@ -75,7 +75,7 @@ export function createGuide(data, history) {
     }).then(handleErrors)
       .then(json => {
         dispatch(postGuidesSuccess(json));
-        history.push('/content/guide/list');
+        history.push('/resources/guide/list');
         return json;
       })
       .catch(error => {
