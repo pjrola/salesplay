@@ -35,7 +35,7 @@ class SideNav extends Component {
             },
             {
               name: 'Learning Paths',
-              url: '/resources/webinars',
+              url: '/resources/paths/list',
               icon: 'fa fa-play-circle'
             },
             {

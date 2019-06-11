@@ -13,6 +13,10 @@ const GuideUpdatePage = React.lazy(() => import('./views/Pages/Guides/Update'));
 const AdminListPage = React.lazy(() => import('./views/Pages/Admins/Index'));
 const AdminCreatePage = React.lazy(() => import('./views/Pages/Admins/Create'));
 
+/** Learning Paths CRUD Pages ***/
+const LearningPathsListPage = React.lazy(() => import('./views/Pages/LearningPaths/Index'));
+const LearningPathsCreatePage = React.lazy(() => import('./views/Pages/LearningPaths/Create'));
+
 /** Locale CRUD Pages ***/
 const LocaleCreatePage = React.lazy(() => import('./views/Pages/Locales/Create'));
 const LocaleListPage = React.lazy(() => import('./views/Pages/Locales/Index'));
@@ -65,7 +69,10 @@ const routes = [
   { path: '/marketing/slot', name: 'Content Slot', component: ContentSlotCreatePage },
 
   { path: '/accounts/administrators/list', name: 'Admins', component: AdminListPage },
-  { path: '/accounts/administrators/create', name: 'Admins', component: AdminCreatePage }
+  { path: '/accounts/administrators/create', name: 'Admins', component: AdminCreatePage },
+
+  { path: '/resources/paths/list', name: 'Paths', component: LearningPathsListPage },
+  { path: '/resources/paths/create', name: 'Paths', component: LearningPathsCreatePage }
 ];
 
 export default routes;
