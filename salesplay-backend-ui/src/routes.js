@@ -11,7 +11,7 @@ const GuideUpdatePage = React.lazy(() => import('./views/Pages/Guides/Update'));
 
 /** Admin CRUD Pages ***/
 const AdminListPage = React.lazy(() => import('./views/Pages/Admins/Index'));
-const AdminCreatePage = React.lazy(() => import('./views/Pages/Admins/Index'));
+const AdminCreatePage = React.lazy(() => import('./views/Pages/Admins/Create'));
 
 /** Locale CRUD Pages ***/
 const LocaleCreatePage = React.lazy(() => import('./views/Pages/Locales/Create'));

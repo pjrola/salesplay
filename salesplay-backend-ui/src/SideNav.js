@@ -99,7 +99,7 @@ class SideNav extends Component {
           children: [
             {
               name: t('layout.sidebar.administrators'),
-              url: '/accounts/administrators',
+              url: '/accounts/administrators/list',
               icon: 'fa fa-shield',
             },
             {

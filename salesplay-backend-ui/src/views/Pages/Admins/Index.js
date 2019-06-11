@@ -27,7 +27,7 @@ class Index extends Component {
 
     if (error) {
       return <>
-        <Link to="/content/guide/create">
+        <Link to="/accounts/administrators/create">
           <Button color="primary float-left">
             <i className="fa fa-plus"></i>&nbsp;{t('pages.guide.operations.add')}
           </Button>
@@ -40,7 +40,7 @@ class Index extends Component {
 
     return (
       <div className="animated fadeIn">
-        <Link to="accounts/administrators/create">
+        <Link to="/accounts/administrators/create">
           <Button color="primary float-left">
             <i className="fa fa-plus"></i>&nbsp;{t('pages.guide.operations.add')}
           </Button>
