@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Log4j2
 @RestController
-public class GuideController {
+public class GuideController implements CrudController<GuideDTO> {
 
     private static final String RESOURCE_PATH = "/guides";
 
@@ -75,8 +75,20 @@ public class GuideController {
     @GetMapping(RESOURCE_PATH + "/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Guide findById(@PathVariable(value = "id") Long guideId) throws ResourceNotFoundException {
-        return service.findById(guideId);
+    public GuideDTO findById(@PathVariable(value = "id") Long guideId) throws ResourceNotFoundException {
+        return mapper.mapToDto(service.findById(guideId));
+    }
+
+    @DeleteMapping(RESOURCE_PATH + "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
+    public void deleteById(Long id) throws ResourceNotFoundException {
+        service.deleteById(id);
+    }
+
+    @Override
+    public GuideDTO update(GuideDTO entity) throws ResourceNotFoundException {
+        return null;
     }
 
     @GetMapping(RESOURCE_PATH + "/slug/{slug}")

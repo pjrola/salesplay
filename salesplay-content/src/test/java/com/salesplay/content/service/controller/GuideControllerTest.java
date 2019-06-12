@@ -124,8 +124,9 @@ public class GuideControllerTest {
     @Test
     public void canRetrieveGuideByIdWhenExists() throws Exception {
         when(guideService.findById(1L)).thenReturn(guideMock);
+        when(siteLocaleDatabaseService.findByCode(enLocale.getCode())).thenReturn(Optional.of(enLocale));
 
-        String actual = mapper.writeValueAsString(guideMock);
+        String actual = mapper.writeValueAsString(guideMapper.mapToDto(guideMock));
 
         ResultActions resultActions = mockMvc.perform(get("/guides/{id}", 1L))
                 .andExpect(status().isOk())

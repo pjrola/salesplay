@@ -66,7 +66,7 @@ public class SiteLocaleController {
     @GetMapping(RESOURCE_PATH + "/enabled")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<SiteLocale> findByEnabled() throws ResourceNotFoundException {
+    public List<SiteLocale> findByEnabled() {
         return service.findAllByIsEnabledTrue();
     }
 }
