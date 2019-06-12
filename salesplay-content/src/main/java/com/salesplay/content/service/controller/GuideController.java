@@ -6,6 +6,7 @@ import com.salesplay.content.service.dto.GuideMapper;
 import com.salesplay.content.service.exception.DuplicateResourceException;
 import com.salesplay.content.service.exception.ResourceNotFoundException;
 import com.salesplay.content.service.service.GuideDatabaseService;
+import com.salesplay.content.service.service.GuideService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,12 +26,12 @@ public class GuideController {
     private static final String RESOURCE_PATH = "/guides";
 
     @NotNull
-    private GuideDatabaseService service;
+    private GuideService service;
 
     private GuideMapper mapper;
 
     @Autowired
-    public GuideController(GuideDatabaseService service, GuideMapper mapper) {
+    public GuideController(GuideService service, GuideMapper mapper) {
         this.service = service;
         this.mapper = mapper;
     }

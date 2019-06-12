@@ -3,7 +3,7 @@ package com.salesplay.content.service.controller;
 import com.salesplay.content.service.domain.SiteLocale;
 import com.salesplay.content.service.exception.DuplicateResourceException;
 import com.salesplay.content.service.exception.ResourceNotFoundException;
-import com.salesplay.content.service.service.SiteLocaleDatabaseService;
+import com.salesplay.content.service.service.SiteLocaleService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,10 +22,10 @@ public class SiteLocaleController {
     private static final String RESOURCE_PATH = "/locales";
 
     @NotNull
-    private SiteLocaleDatabaseService service;
+    private SiteLocaleService service;
 
     @Autowired
-    public SiteLocaleController(SiteLocaleDatabaseService service) {
+    public SiteLocaleController(SiteLocaleService service) {
         this.service = service;
     }
 

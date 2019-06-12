@@ -27,4 +27,19 @@ public class SiteLocale extends PersistentObject {
 
     @Column(name = "is_enabled", nullable = false)
     private Boolean isEnabled = false;
+
+    protected SiteLocale(){}
+
+    private SiteLocale(String name, String code, Boolean isDefault, Boolean isEnabled) {
+        this.name = name;
+        this.code = code;
+        this.isDefault = isDefault;
+        this.isEnabled = isEnabled;
+    }
+
+    public static SiteLocale of(String name, String code, Boolean isDefault, Boolean isEnabled) {
+        checkNotNull(name);
+        checkNotNull(code);
+        return new SiteLocale(name, code, isDefault, isEnabled);
+    }
 }

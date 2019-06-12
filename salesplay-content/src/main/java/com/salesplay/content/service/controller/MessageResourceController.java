@@ -3,7 +3,7 @@ package com.salesplay.content.service.controller;
 import com.salesplay.content.service.domain.MessageResource;
 import com.salesplay.content.service.exception.DuplicateResourceException;
 import com.salesplay.content.service.exception.ResourceNotFoundException;
-import com.salesplay.content.service.service.MessageByLocaleDatabaseService;
+import com.salesplay.content.service.service.MessageByLocaleService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,10 +21,10 @@ public class MessageResourceController implements CrudController<MessageResource
     private static final String RESOURCE_PATH = "/messageResources";
 
     @NotNull
-    private MessageByLocaleDatabaseService service;
+    private MessageByLocaleService service;
 
     @Autowired
-    public MessageResourceController(MessageByLocaleDatabaseService service) {
+    public MessageResourceController(MessageByLocaleService service) {
         this.service = service;
     }
 
