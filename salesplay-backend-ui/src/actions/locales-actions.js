@@ -79,7 +79,7 @@ export function createLocale(data, history) {
     }).then(handleErrors)
       .then(json => {
         dispatch(postLocalesSuccess(json));
-        history.push('/content/locales/list');
+        history.push('/resources/locales/list');
         return json;
       })
       .catch(error => {
@@ -195,8 +195,5 @@ function arrayToObject(array, keyField) {
 }
 
 function isServiceDown(error) {
-  if (error === 'Failed to fetch') {
-    return true;
-  }
-  return false;
+  return error === 'Failed to fetch';
 }

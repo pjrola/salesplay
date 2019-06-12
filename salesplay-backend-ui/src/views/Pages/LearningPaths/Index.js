@@ -1,64 +1,51 @@
 import React, { Component } from 'react';
-import GuideTable from "../../../components/Guides/List/Table";
 import { withTranslation } from 'react-i18next';
 import { connect } from "react-redux";
-import { deleteGuides, fetchGuides } from "../../../actions/guides-actions";
 import Loader from "../../../components/Loading/Loader";
 import Error from "../../../components/Error/Error";
 import { compose } from 'redux';
-import {Button} from "reactstrap";
+import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const mapStateToProps = state => ({
-  guides: state.guides.items,
-  loading: state.guides.loading,
-  error: state.guides.error
 });
 
 const mapActionsToProps  = {
-  fetchGuides: fetchGuides,
-  deleteGuides: deleteGuides
 };
 
 class Index extends Component {
 
-  constructor(props) {
-    super(props);
+  componentDidMount() {
     this.onDelete = this.onDelete.bind(this);
   }
 
-  componentDidMount() {
-    this.props.fetchGuides();
-  }
-
-  onDelete(guides) {
-    this.props.deleteGuides(guides);
+  onDelete(items) {
   }
 
   render() {
-    const { error, loading, guides, t } = this.props;
+    const { error, loading, t } = this.props;
 
     if (error) {
       return <>
-        <Link to="/resources/guide/create">
+        <Link to="/resources/paths/create">
           <Button color="primary float-left">
-            <i className="fa fa-plus"></i>&nbsp;{t('pages.guide.operations.add')}
+            <i className="fa fa-plus"></i>&nbsp;{t('pages.locale.operations.add')}
           </Button>
         </Link>
         <Error error={error}/>
-        </>
+      </>
     } else if (loading) {
-        return <Loader/>
+      return <Loader/>
     }
 
     return (
       <div className="animated fadeIn">
-        <Link to="/resources/guide/create">
+        <Link to="/resources/paths/create">
           <Button color="primary float-left">
-            <i className="fa fa-plus"></i>&nbsp;{t('pages.guide.operations.add')}
+            <i className="fa fa-plus"></i>&nbsp;{t('pages.locale.operations.add')}
           </Button>
         </Link>
-        <GuideTable items={guides} onDelete={this.onDelete}/>
+        Learning Path Table
       </div>
     );
   }

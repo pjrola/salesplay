@@ -6,7 +6,7 @@ import { withTranslation } from "react-i18next";
 import SideNav from "../../SideNav";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { logout } from "../../actions/admin-actions";
+import { logout } from "../../actions/auth-actions";
 import { findLocaleByEnabled } from "../../actions/locales-actions";
 import { clearPreviousErrors } from "../../actions/root-actions";
 import AuthService from '../../services/auth';

@@ -1,41 +1,78 @@
 import React from 'react';
 import DefaultLayout from './containers/DefaultLayout';
 
+/** Main Dashboard Page ***/
 const Dashboard = React.lazy(() => import('./views/Pages/Dashboard'));
-const GuidePage = React.lazy(() => import('./views/Pages/Guides/Index'));
-const Guide = React.lazy(() => import('./views/Pages/Guides/Create'));
-const Locale = React.lazy(() => import('./views/Pages/Locales/Create'));
-const GuideDetailsPage = React.lazy(() => import('./views/Pages/Guides/Update'));
+
+/** Guide CRUD Pages ***/
+const GuideListPage = React.lazy(() => import('./views/Pages/Guides/Index'));
+const GuideCreatePage = React.lazy(() => import('./views/Pages/Guides/Create'));
+const GuideUpdatePage = React.lazy(() => import('./views/Pages/Guides/Update'));
+
+/** Admin CRUD Pages ***/
+const AdminListPage = React.lazy(() => import('./views/Pages/Admins/Index'));
+const AdminCreatePage = React.lazy(() => import('./views/Pages/Admins/Create'));
+
+/** Learning Paths CRUD Pages ***/
+const LearningPathsListPage = React.lazy(() => import('./views/Pages/LearningPaths/Index'));
+const LearningPathsCreatePage = React.lazy(() => import('./views/Pages/LearningPaths/Create'));
+
+/** Locale CRUD Pages ***/
+const LocaleCreatePage = React.lazy(() => import('./views/Pages/Locales/Create'));
+const LocaleListPage = React.lazy(() => import('./views/Pages/Locales/Index'));
+
+/** Message CRUD Pages **/
+const MessageListPage = React.lazy(() => import('./views/Pages/Messages/Index'));
+const MessageCreatePage = React.lazy(() => import('./views/Pages/Messages/Create'));
+
+/** Guide Slot CRUD Pages **/
 const GuideGroupPage = React.lazy(() => import('./views/Pages/Guides/Groups/Index'));
-const Webinar = React.lazy(() => import('./views/Pages/Webinars/Webinar'));
-const TagList = React.lazy(() => import('./views/Pages/Tags/TagList'));
+
+/** Webinar CRUD Pages **/
+const WebinarListPage = React.lazy(() => import('./views/Pages/Webinars/Webinar'));
+
+/** Tag CRUD Pages **/
+const TagListPage = React.lazy(() => import('./views/Pages/Tags/TagList'));
 const Tag = React.lazy(() => import('./views/Pages/Tags/Tag'));
-const ContentAssetList = React.lazy(() => import('./views/Pages/ContentAssets/ContentAssetList'));
-const ContentAsset = React.lazy(() => import('./views/Pages/ContentAssets/ContentAsset'));
-const ContentSlotList = React.lazy(() => import('./views/Pages/ContentSlots/ContentSlotList'));
-const ContentSlot = React.lazy(() => import('./views/Pages/ContentSlots/ContentSlot'));
-const LocalePage = React.lazy(() => import('./views/Pages/Locales/Index'));
-const MessagePage = React.lazy(() => import('./views/Pages/Messages/Index'));
-const Message = React.lazy(() => import('./views/Pages/Messages/Create'));
+
+/** ContentAsset CRUD Pages **/
+const ContentAssetListPage = React.lazy(() => import('./views/Pages/ContentAssets/ContentAssetList'));
+const ContentAssetCreatePage = React.lazy(() => import('./views/Pages/ContentAssets/ContentAsset'));
+
+/** Content Slots CRUD Pages **/
+const ContentSlotListPage = React.lazy(() => import('./views/Pages/ContentSlots/ContentSlotList'));
+const ContentSlotCreatePage = React.lazy(() => import('./views/Pages/ContentSlots/ContentSlot'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home', component: DefaultLayout },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
-  { path: '/content/guide/list', name: 'GuidePage', component: GuidePage },
-  { path: '/content/guide/create', name: 'Guide', component: Guide },
-  { path: '/content/guide/update/:id', exact: true, name: 'Guide Details', component: GuideDetailsPage },
-  { path: '/content/guide/groups/list', name: 'Guide Groups', component: GuideGroupPage },
-  { path: '/content/locales/list', name: 'Locales', component: LocalePage },
-  { path: '/content/locales/create', name: 'Locales', component: Locale },
-  { path: '/content/messages/list', name: 'Messages', component: MessagePage },
-  { path: '/content/message/create', name: 'Messages', component: Message },
-  { path: '/content/webinar', name: 'Webinar', component: Webinar },
-  { path: '/content/tags', name: 'Tag', component: TagList },
-  { path: '/content/tag', name: 'Tag', component: Tag },
-  { path: '/marketing/assets', name: 'Content Asset List', component: ContentAssetList },
-  { path: '/marketing/asset', name: 'Content Asset', component: ContentAsset },
-  { path: '/marketing/slots', name: 'Content Slots List', component: ContentSlotList },
-  { path: '/marketing/slot', name: 'Content Slot', component: ContentSlot }
+
+  { path: '/resources/guide/list', name: 'GuidePage', component: GuideListPage },
+  { path: '/resources/guide/create', name: 'Guide', component: GuideCreatePage },
+  { path: '/resources/guide/update/:id', exact: true, name: 'Guide Details', component: GuideUpdatePage },
+  { path: '/resources/guide/groups/list', name: 'Guide Groups', component: GuideGroupPage },
+
+  { path: '/resources/locales/list', name: 'Locales', component: LocaleListPage },
+  { path: '/resources/locales/create', name: 'Locales', component: LocaleCreatePage },
+
+  { path: '/resources/messages/list', name: 'Messages', component: MessageListPage },
+  { path: '/resources/message/create', name: 'Messages', component: MessageCreatePage },
+  { path: '/resources/webinar', name: 'Webinar', component: WebinarListPage },
+
+  { path: '/resources/tags', name: 'Tag', component: TagListPage },
+  { path: '/resources/tag', name: 'Tag', component: Tag },
+
+  { path: '/marketing/assets', name: 'Content Asset List', component: ContentAssetListPage },
+  { path: '/marketing/asset', name: 'Content Asset', component: ContentAssetCreatePage },
+
+  { path: '/marketing/slots', name: 'Content Slots List', component: ContentSlotListPage },
+  { path: '/marketing/slot', name: 'Content Slot', component: ContentSlotCreatePage },
+
+  { path: '/accounts/administrators/list', name: 'Admins', component: AdminListPage },
+  { path: '/accounts/administrators/create', name: 'Admins', component: AdminCreatePage },
+
+  { path: '/resources/paths/list', name: 'Paths', component: LearningPathsListPage },
+  { path: '/resources/paths/create', name: 'Paths', component: LearningPathsCreatePage }
 ];
 
 export default routes;
