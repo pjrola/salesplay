@@ -5,7 +5,6 @@ import com.salesplay.content.service.dto.GuideDTO;
 import com.salesplay.content.service.dto.GuideMapper;
 import com.salesplay.content.service.exception.DuplicateResourceException;
 import com.salesplay.content.service.exception.ResourceNotFoundException;
-import com.salesplay.content.service.service.GuideDatabaseService;
 import com.salesplay.content.service.service.GuideService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
