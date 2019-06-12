@@ -1,6 +1,8 @@
 package com.salesplay.content.service.service;
 
 import com.salesplay.content.service.domain.*;
+import com.salesplay.content.service.exception.DuplicateResourceException;
+import com.salesplay.content.service.exception.ResourceNotFoundException;
 import com.salesplay.content.service.repository.GuideRepository;
 import com.salesplay.content.service.repository.SiteLocaleRepository;
 import org.junit.Before;
@@ -17,7 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import static junit.framework.TestCase.assertTrue;
+import static org.assertj.core.api.Java6BDDAssertions.then;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
@@ -79,12 +83,29 @@ public class GuideServiceTest {
         assertEquals(guideMock, result.get());
     }
 
+    @Test(expected = ResourceNotFoundException.class)
+    public void throwsResourceNotFoundExceptionWhenRetrieveBySlugNotFound() throws Exception {
+        when(guideDatabaseService.findBySlug(guideMock.getSlug())).thenThrow(new ResourceNotFoundException(guideMock.getSlug()));
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void throwsResourceNotFoundExceptionWhenFindByIdNotFound() throws Exception {
+        when(guideDatabaseService.findById(1L)).thenThrow(new ResourceNotFoundException("1L"));
+    }
+
     @Test
-    public void canDeleteByEntity() throws Exception {
+    public void canDeleteById() throws Exception {
         when(guideRepository.findById(1L)).thenReturn(Optional.ofNullable(guideMock));
         Optional<Guide> result = Optional.ofNullable(guideDatabaseService.findById(1L));
         guideDatabaseService.deleteById(1L);
         verify(guideRepository, times(1)).deleteById(result.get().getId());
+    }
+
+    @Test
+    public void canDeleteByEntity() throws Exception {
+        when(guideRepository.findById(1L)).thenReturn(Optional.ofNullable(guideMock));
+        guideDatabaseService.delete(guideMock);
+        verify(guideRepository, times(1)).delete(guideMock);
     }
 
     @Test
@@ -109,6 +130,14 @@ public class GuideServiceTest {
         verify(guideRepository, times(1)).save(guideMock);
     }
 
+    @Test(expected = DuplicateResourceException.class)
+    public void throwsDuplicateResourceExceptionWhenSavingDuplicateEntity() throws Exception {
+        when(guideRepository.findBySlug(guideMock.getSlug())).thenReturn(Optional.of(guideMock));
+        when(guideDatabaseService.create(guideMock)).thenThrow(new DuplicateResourceException(guideMock.getSlug()));
+
+        verify(guideRepository, times(0)).save(guideMock);
+    }
+
     @Test
     public void canFindAllById() throws Exception {
         List<Long> idList = new ArrayList<>();
@@ -131,6 +160,18 @@ public class GuideServiceTest {
     public void canDeleteAll() throws Exception {
         guideDatabaseService.deleteAll();
         verify(guideRepository, times(1)).deleteAll();
+    }
+
+    @Test
+    public void canDeleteAllByEntities() throws Exception {
+        List<Guide> guideList = new ArrayList<>();
+        guideList.add(guideMock);
+        guideList.add(guideMock);
+        guideList.add(guideMock);
+
+        guideDatabaseService.deleteAll(guideList);
+
+        verify(guideRepository, times(1)).deleteAll(guideList);
     }
 
 }
