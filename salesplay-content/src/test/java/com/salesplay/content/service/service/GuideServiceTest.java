@@ -103,7 +103,7 @@ public class GuideServiceTest {
 
     @Test
     public void canDeleteByEntity() throws Exception {
-        when(guideRepository.findById(1L)).thenReturn(Optional.ofNullable(guideMock));
+        when(guideRepository.findBySlug(guideMock.getSlug())).thenReturn(Optional.ofNullable(guideMock));
         guideDatabaseService.delete(guideMock);
         verify(guideRepository, times(1)).delete(guideMock);
     }

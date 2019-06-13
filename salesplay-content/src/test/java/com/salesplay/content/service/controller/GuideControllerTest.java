@@ -207,6 +207,14 @@ public class GuideControllerTest {
     }
 
     @Test
+    public void canDeleteGuideByIdWhenExists() throws Exception {
+        when(guideService.findById(1L)).thenReturn(guideMock);
+
+        mockMvc.perform(delete("/guides/{id}", 1L))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
     public void canPostGuideWithValidInput() throws Exception {
         when(guideService.create(guideMock)).thenReturn(guideMock);
         when(siteLocaleDatabaseService.findByCode(enLocale.getCode())).thenReturn(Optional.of(enLocale));

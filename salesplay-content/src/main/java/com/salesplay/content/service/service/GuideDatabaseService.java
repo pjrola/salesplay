@@ -64,7 +64,7 @@ public class GuideDatabaseService implements GuideService {
     }
 
     public void delete(Guide guide) throws ResourceNotFoundException {
-        repository.delete(findById(guide.getId()));
+        repository.delete(findBySlug(guide.getSlug()));
     }
 
     public void deleteAll() {
