@@ -51,7 +51,7 @@ public class GuideServiceTest {
     }
 
     @Test
-    public void canRetrievePageList() throws Exception {
+    public void canRetrievePageList() {
         List<Guide> guideList = new ArrayList<>();
         guideList.add(guideMock);
         guideList.add(guideMock);
@@ -107,7 +107,7 @@ public class GuideServiceTest {
     }
 
     @Test
-    public void canSaveAllEntities() throws Exception {
+    public void canSaveAllEntities() {
         List<Guide> guideList = new ArrayList<>();
         guideList.add(guideMock);
         guideList.add(guideMock);
@@ -137,7 +137,7 @@ public class GuideServiceTest {
     }
 
     @Test
-    public void canFindAllById() throws Exception {
+    public void canFindAllById() {
         List<Long> idList = new ArrayList<>();
         idList.add(1L);
         idList.add(2L);

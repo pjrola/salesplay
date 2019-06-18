@@ -49,7 +49,7 @@ public class MessageByLocaleDatabaseService implements MessageByLocaleService {
     }
 
     public MessageResource update(MessageResource resource) throws ResourceNotFoundException {
-        if (!repository.existsById(resource.getId())) {
+        if (existsByKeyAndLocale(resource.getKey(), resource.getLocale())) {
             throw new ResourceNotFoundException(resource.getId().toString());
         }
 
