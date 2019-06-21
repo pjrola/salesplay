@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
 import java.util.List;
 
 @Log4j2
@@ -68,6 +69,13 @@ public class MessageResourceController implements CrudController<MessageResource
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
         service.deleteById(id);
+    }
+
+    @GetMapping(RESOURCE_PATH + "/locale/{locale}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<MessageResource> findAllByLocale(@PathVariable(value = "locale") String locale) {
+        return service.findAllByLocale(locale);
     }
 
 }
