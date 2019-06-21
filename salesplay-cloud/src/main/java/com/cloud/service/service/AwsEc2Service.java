@@ -6,10 +6,10 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2ClientBuilder;
 import com.amazonaws.services.ec2.model.*;
-import com.cloud.service.context.CloudService;
 import com.cloud.service.dto.InstanceDTO;
 import com.cloud.service.entity.Instance;
 import com.cloud.service.entity.MachineState;
+import com.cloud.service.registry.AdapterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-@Service
-public class AwsEc2Service implements CloudService {
+@Service("amazonWebServices")
+public class AwsEc2Service implements AdapterService<Instance> {
 
     private AmazonEC2 ec2;
     private final Logger log = LoggerFactory.getLogger(this.getClass());

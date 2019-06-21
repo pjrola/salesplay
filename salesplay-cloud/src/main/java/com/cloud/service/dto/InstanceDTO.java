@@ -11,7 +11,7 @@ import java.util.Date;
 public class InstanceDTO {
     private String remoteId;
     private MachineState state;
-    private String assignee;
+    private String owner;
     private Template template;
     private boolean locked;
     private String url;

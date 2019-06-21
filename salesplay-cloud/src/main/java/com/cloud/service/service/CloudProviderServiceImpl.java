@@ -25,20 +25,20 @@ public class CloudProviderServiceImpl implements CloudProviderService {
     }
 
     public CloudProvider findById(Long id) throws ResourceNotFoundException {
-        return cloudProviderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id, "not found"));
+        return cloudProviderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id.toString()));
     }
 
     public CloudProvider save(CloudProvider cloudProvider) throws DuplicateResourceException {
         Optional<CloudProvider> duplicate = cloudProviderRepository.findByUniqueId(cloudProvider.getUniqueId());
 
         if (duplicate.isPresent()) {
-            throw DuplicateResourceException.createWith(cloudProvider.getUniqueId());
+            throw new DuplicateResourceException(cloudProvider.getUniqueId());
         }
         return cloudProviderRepository.save(cloudProvider);
     }
 
     public CloudProvider update(CloudProvider cloudProvider) throws ResourceNotFoundException {
-        CloudProvider provider = cloudProviderRepository.findById(cloudProvider.getId()).orElseThrow(() -> new ResourceNotFoundException(cloudProvider.getId(), "not found"));
+        CloudProvider provider = cloudProviderRepository.findById(cloudProvider.getId()).orElseThrow(() -> new ResourceNotFoundException(cloudProvider.getId().toString()));
         provider.setBrand(cloudProvider.getBrand());
         provider.setUniqueId(cloudProvider.getUniqueId());
         provider.setEnabled(provider.isEnabled());
@@ -47,7 +47,7 @@ public class CloudProviderServiceImpl implements CloudProviderService {
 
     public void delete(Long id) throws ResourceNotFoundException {
         CloudProvider provider = cloudProviderRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(id, "not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(id.toString()));
         cloudProviderRepository.delete(provider);
     }
 }

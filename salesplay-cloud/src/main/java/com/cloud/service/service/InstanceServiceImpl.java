@@ -1,11 +1,11 @@
 package com.cloud.service.service;
 
-import com.cloud.service.context.CloudService;
 import com.cloud.service.dto.InstanceDTO;
 import com.cloud.service.entity.Instance;
 import com.cloud.service.entity.MachineState;
 import com.cloud.service.exception.DuplicateResourceException;
 import com.cloud.service.exception.ResourceNotFoundException;
+import com.cloud.service.registry.ServiceRegistry;
 import com.cloud.service.repository.InstanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,12 +16,13 @@ import org.springframework.stereotype.Service;
 public class InstanceServiceImpl implements InstanceService {
 
     private InstanceRepository repository;
-    private CloudService provider;
+
+    private ServiceRegistry serviceRegistry;
 
     @Autowired
-    public InstanceServiceImpl(InstanceRepository repository, CloudService provider) {
+    public InstanceServiceImpl(InstanceRepository repository, ServiceRegistry serviceRegistry) {
         this.repository = repository;
-        this.provider = provider;
+        this.serviceRegistry = serviceRegistry;
     }
 
     public Page findAll(Pageable pageable) {
@@ -29,11 +30,11 @@ public class InstanceServiceImpl implements InstanceService {
     }
 
     public Instance findById(Long id) throws ResourceNotFoundException {
-        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id, "not found"));
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id.toString()));
     }
 
     public Instance save(Instance instance) throws DuplicateResourceException {
-        Instance remote = provider.create(instance);
+        Instance remote = serviceRegistry.getService("amazonWebServices").create(instance);
         return repository.save(remote);
     }
 
@@ -43,12 +44,12 @@ public class InstanceServiceImpl implements InstanceService {
 
     public void delete(Long id) throws ResourceNotFoundException {
         Instance instance = this.findById(id);
-        provider.delete(id.toString());
+        serviceRegistry.getService("amazonWebServices").delete(id.toString());
         repository.delete(instance);
     }
 
     public Instance findByAssignee(String assignee) throws ResourceNotFoundException {
-        return repository.findByAssignee(assignee).orElseThrow(() -> new ResourceNotFoundException(1L, "not found"));
+        return repository.findByAssignee(assignee).orElseThrow(() -> new ResourceNotFoundException(assignee));
     }
 
     /**
@@ -61,7 +62,7 @@ public class InstanceServiceImpl implements InstanceService {
      */
     public Instance startInstance(Long id) throws ResourceNotFoundException {
         Instance instance = this.findById(id);
-        InstanceDTO dto = provider.start(instance.getRemoteId());
+        InstanceDTO dto = serviceRegistry.getService("amazonWebServices").start(instance.getRemoteId());
         instance.setState(dto.getState());
         return repository.save(instance);
     }
@@ -75,7 +76,7 @@ public class InstanceServiceImpl implements InstanceService {
      * @throws ResourceNotFoundException
      */
     public Instance terminateInstance(Long id) throws ResourceNotFoundException {
-        Instance instance = provider.terminate(this.findById(id));
+        Instance instance = serviceRegistry.getService("amazonWebServices").terminate(this.findById(id));
         instance.setState(MachineState.terminated);
         return repository.save(instance);
     }
@@ -90,14 +91,14 @@ public class InstanceServiceImpl implements InstanceService {
      */
     public Instance stopInstance(Long id) throws ResourceNotFoundException {
         Instance instance = this.findById(id);
-        InstanceDTO dto = provider.stop(instance.getRemoteId());
+        InstanceDTO dto = serviceRegistry.getService("amazonWebServices").stop(instance.getRemoteId());
         instance.setState(dto.getState());
         return repository.save(instance);
     }
 
     public Instance restartInstance(Long id) throws ResourceNotFoundException {
         Instance instance = this.findById(id);
-        InstanceDTO dto = provider.restart(instance.getRemoteId());
+        InstanceDTO dto = serviceRegistry.getService("amazonWebServices").restart(instance.getRemoteId());
         return repository.save(instance);
     }
 

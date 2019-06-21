@@ -26,10 +26,10 @@ public class Instance extends BaseEntity {
     @Column(name = "state")
     private MachineState state;
 
-    @NotBlank(message = "{instance.assignee.notNull}")
-    @Size(min = 1, max = 100, message = "{instance.assignee.size}")
-    @Column(name = "assignee", unique = true)
-    private String assignee;
+    @NotBlank(message = "{instance.owner.notNull}")
+    @Size(min = 1, max = 100, message = "{instance.owner.size}")
+    @Column(name = "owner", unique = true)
+    private String owner;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "template_id", nullable = false)
@@ -51,10 +51,10 @@ public class Instance extends BaseEntity {
 
     public Instance(){}
 
-    public Instance(String remoteId, MachineState state, String assignee, Template template, boolean locked, String url) {
+    public Instance(String remoteId, MachineState state, String owner, Template template, boolean locked, String url) {
         this.remoteId = remoteId;
         this.state = state;
-        this.assignee = assignee;
+        this.owner = owner;
         this.template = template;
         this.locked = locked;
         this.url = url;
