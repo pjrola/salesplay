@@ -19,7 +19,7 @@ public interface InstanceService {
 
     void delete(Long id) throws ResourceNotFoundException;
 
-    Instance findByAssignee(String assignee) throws ResourceNotFoundException;
+    Instance findByOwner(String email) throws ResourceNotFoundException;
 
     Instance startInstance(Long id) throws ResourceNotFoundException;
 

@@ -4,6 +4,7 @@ import com.cloud.service.entity.Instance;
 import com.cloud.service.entity.MachineState;
 import com.cloud.service.exception.DuplicateResourceException;
 import com.cloud.service.exception.ResourceNotFoundException;
+import com.cloud.service.service.InstanceService;
 import com.cloud.service.service.InstanceServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import javax.validation.Valid;
 @RestController
 public class InstanceController {
 
-    private InstanceServiceImpl instanceService;
+    private InstanceService instanceService;
 
     @Autowired
     public InstanceController(InstanceServiceImpl instanceService) {
@@ -37,9 +38,9 @@ public class InstanceController {
         return new ResponseEntity<>(instanceService.findById(instanceId), HttpStatus.OK);
     }
 
-    @GetMapping("/instances/email/{assignee}")
-    public ResponseEntity<Instance> findByEmail(@PathVariable(value = "assignee") String assignee) throws ResourceNotFoundException {
-        return new ResponseEntity<>(instanceService.findByAssignee(assignee), HttpStatus.OK);
+    @GetMapping("/instances/email/{email}")
+    public ResponseEntity<Instance> findByEmail(@PathVariable(value = "email") String owner) throws ResourceNotFoundException {
+        return new ResponseEntity<>(instanceService.findByOwner(owner), HttpStatus.OK);
     }
 
     @GetMapping("/instances/start/{id}")

@@ -30,10 +30,15 @@ public class InstanceServiceImpl implements InstanceService {
     }
 
     public Instance findById(Long id) throws ResourceNotFoundException {
-        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id.toString()));
+        return repository.findById(id).orElseThrow(()
+                -> new ResourceNotFoundException(id.toString()));
     }
 
     public Instance save(Instance instance) throws DuplicateResourceException {
+        if (repository.existsByOwner(instance.getOwner())) {
+            throw new DuplicateResourceException(instance.getOwner());
+        }
+
         Instance remote = serviceRegistry.getService("amazonWebServices").create(instance);
         return repository.save(remote);
     }
@@ -48,8 +53,8 @@ public class InstanceServiceImpl implements InstanceService {
         repository.delete(instance);
     }
 
-    public Instance findByAssignee(String assignee) throws ResourceNotFoundException {
-        return repository.findByAssignee(assignee).orElseThrow(() -> new ResourceNotFoundException(assignee));
+    public Instance findByOwner(String email) throws ResourceNotFoundException {
+        return repository.findByOwner(email).orElseThrow(() -> new ResourceNotFoundException(email));
     }
 
     /**

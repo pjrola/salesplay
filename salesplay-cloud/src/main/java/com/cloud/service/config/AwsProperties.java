@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 @ToString
 @ConfigurationProperties(prefix="aws")
 public class AwsProperties {
-
     @NotNull
     private String region;
 

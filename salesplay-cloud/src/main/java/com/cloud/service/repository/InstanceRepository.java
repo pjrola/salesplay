@@ -7,5 +7,6 @@ import java.util.Optional;
 
 @Repository
 public interface InstanceRepository extends JpaRepository<Instance, Long> {
-    Optional<Instance> findByAssignee(String assignee);
+    Optional<Instance> findByOwner(String email);
+    Boolean existsByOwner(String email);
 }
