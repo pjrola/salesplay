@@ -1,15 +1,20 @@
 package com.cloud.service.entity;
 
 import com.cloud.service.entity.base.BaseEntity;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 import org.springframework.data.annotation.LastModifiedBy;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Objects;
 
 @Audited
+@Getter
+@Setter
+@EqualsAndHashCode
 @Entity
 @Table(name = "templates")
 public class Template extends BaseEntity {
@@ -53,78 +58,4 @@ public class Template extends BaseEntity {
         this.description = description;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public boolean isDefault() {
-        return isDefault;
-    }
-
-    public void setDefault(boolean aDefault) {
-        isDefault = aDefault;
-    }
-
-    public CloudProvider getCloudProvider() {
-        return cloudProvider;
-    }
-
-    public void setCloudProvider(CloudProvider cloudProvider) {
-        this.cloudProvider = cloudProvider;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Template)) return false;
-        Template template = (Template) o;
-        return enabled == template.enabled &&
-                isDefault == template.isDefault &&
-                Objects.equals(name, template.name) &&
-                Objects.equals(version, template.version) &&
-                Objects.equals(cloudProvider, template.cloudProvider) &&
-                Objects.equals(description, template.description) &&
-                Objects.equals(lastModifiedBy, template.lastModifiedBy);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, version, enabled, isDefault, cloudProvider, description, lastModifiedBy);
-    }
 }

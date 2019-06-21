@@ -1,6 +1,8 @@
 package com.cloud.service.entity;
 
 import com.cloud.service.entity.base.BaseEntity;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.envers.Audited;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -8,6 +10,8 @@ import javax.validation.constraints.Size;
 
 @Audited
 @Entity
+@Getter
+@Setter
 @Table(name = "cloud_providers")
 public class CloudProvider extends BaseEntity {
 
@@ -33,37 +37,5 @@ public class CloudProvider extends BaseEntity {
         this.brand = brand;
         this.uniqueId = uniqueId;
         this.enabled = false;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getUniqueId() {
-        return uniqueId;
-    }
-
-    public void setUniqueId(String uniqueId) {
-        this.uniqueId = uniqueId;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 }

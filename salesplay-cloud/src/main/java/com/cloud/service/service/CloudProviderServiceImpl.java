@@ -41,7 +41,7 @@ public class CloudProviderServiceImpl implements CloudProviderService {
         CloudProvider provider = cloudProviderRepository.findById(cloudProvider.getId()).orElseThrow(() -> new ResourceNotFoundException(cloudProvider.getId(), "not found"));
         provider.setBrand(cloudProvider.getBrand());
         provider.setUniqueId(cloudProvider.getUniqueId());
-        provider.setEnabled(provider.getEnabled());
+        provider.setEnabled(provider.isEnabled());
         return cloudProviderRepository.save(provider);
     }
 

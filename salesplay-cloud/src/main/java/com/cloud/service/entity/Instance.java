@@ -4,12 +4,17 @@ import com.cloud.service.entity.base.BaseEntity;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.LastModifiedBy;
 import java.util.Date;
-import java.util.Objects;
 
 @Entity
+@Getter
+@Setter
+@EqualsAndHashCode
 @Audited
 @Table(name = "instances")
 public class Instance extends BaseEntity {
@@ -55,87 +60,4 @@ public class Instance extends BaseEntity {
         this.url = url;
     }
 
-    public MachineState getState() {
-        return state;
-    }
-
-    public void setState(MachineState state) {
-        this.state = state;
-    }
-
-    public String getAssignee() {
-        return assignee;
-    }
-
-    public void setAssignee(String assignee) {
-        this.assignee = assignee;
-    }
-
-    public Template getTemplate() {
-        return template;
-    }
-
-    public void setTemplate(Template template) {
-        this.template = template;
-    }
-
-    public boolean isLocked() {
-        return locked;
-    }
-
-    public void setLocked(boolean locked) {
-        this.locked = locked;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public Date getLastStartedTime() {
-        return lastStartedTime;
-    }
-
-    public void setLastStartedTime(Date lastStartedTime) {
-        this.lastStartedTime = lastStartedTime;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public String getRemoteId() {
-        return remoteId;
-    }
-
-    public void setRemoteId(String remoteId) {
-        this.remoteId = remoteId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Instance)) return false;
-        Instance instance = (Instance) o;
-        return locked == instance.locked &&
-                Objects.equals(remoteId, instance.remoteId) &&
-                state == instance.state &&
-                Objects.equals(assignee, instance.assignee) &&
-                Objects.equals(template, instance.template) &&
-                Objects.equals(url, instance.url) &&
-                Objects.equals(lastStartedTime, instance.lastStartedTime) &&
-                Objects.equals(lastModifiedBy, instance.lastModifiedBy);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(remoteId, state, assignee, template, locked, url, lastStartedTime, lastModifiedBy);
-    }
 }

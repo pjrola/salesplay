@@ -2,12 +2,17 @@ package com.cloud.service.entity;
 
 import com.cloud.service.entity.base.BaseEntity;
 import javax.persistence.*;
+
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.LastModifiedBy;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Audited
+@Getter
+@Setter
 @Entity
 @Table(name = "regions")
 public class Region extends BaseEntity {
@@ -52,59 +57,4 @@ public class Region extends BaseEntity {
         this.isDefault = false;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public CloudProvider getCloudProvider() {
-        return cloudProvider;
-    }
-
-    public void setCloudProvider(CloudProvider cloudProvider) {
-        this.cloudProvider = cloudProvider;
-    }
-
-    public String getRegionCode() {
-        return regionCode;
-    }
-
-    public void setRegionCode(String regionCode) {
-        this.regionCode = regionCode;
-    }
-
-    public String getEndPoint() {
-        return endPoint;
-    }
-
-    public void setEndPoint(String endPoint) {
-        this.endPoint = endPoint;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public boolean isDefault() {
-        return isDefault;
-    }
-
-    public void setDefault(boolean aDefault) {
-        isDefault = aDefault;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
 }

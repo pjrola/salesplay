@@ -24,7 +24,7 @@ public class CloudProviderController {
 
     @GetMapping("/providers/{id}")
     public ResponseEntity<CloudProvider> findById(@PathVariable(value = "id") Long providerId) throws ResourceNotFoundException {
-        return new ResponseEntity<CloudProvider>(cloudProviderService.findById(providerId), HttpStatus.OK);
+        return new ResponseEntity<>(cloudProviderService.findById(providerId), HttpStatus.OK);
     }
 
     @GetMapping("/providers")
