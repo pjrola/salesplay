@@ -40,7 +40,7 @@ public class InstanceServiceImpl implements InstanceService {
         }
 
         Instance remote = serviceRegistry.getService("amazonWebServices").create(instance);
-        return repository.save(remote);
+        return repository.save(instance);
     }
 
     public Instance update(Instance instance) throws ResourceNotFoundException {

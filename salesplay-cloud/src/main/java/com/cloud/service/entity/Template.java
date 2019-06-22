@@ -24,8 +24,8 @@ public class Template extends BaseEntity {
     @Column(name = "name", unique = true)
     private String name;
 
-    @NotBlank(message = "{image.name.notNull}")
-    @Size(min = 1, max = 100, message = "{image.name.size}")
+    @NotBlank(message = "{version.name.notNull}")
+    @Size(min = 1, max = 100, message = "{version.name.size}")
     @Column(name = "version", unique = true)
     private String version;
 

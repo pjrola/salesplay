@@ -31,7 +31,7 @@ public class Instance extends BaseEntity {
     @Column(name = "owner", unique = true)
     private String owner;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "template_id", nullable = false)
     private Template template;
 
