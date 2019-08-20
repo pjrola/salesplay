@@ -181,4 +181,8 @@ public class AccountServiceImpl implements AccountService {
         }
         return authorities;
     }
+
+    public Boolean isEmailAlreadyInUse(String email) {
+        return accountRepository.existsByEmail(email);
+    }
 }

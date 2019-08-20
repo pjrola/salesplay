@@ -1,5 +1,7 @@
 package com.auth.service.entity;
 
+import com.auth.service.util.validate.UniqueEmail;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -12,6 +14,7 @@ import java.util.Set;
 @Table(name = "accounts")
 public class Account extends BaseEntity {
 
+    @UniqueEmail
     @NotBlank(message = "{account.email.notNull}")
     @Size(min = 1, max = 100, message = "{account.email.size}")
     @Column(name = "email", unique = true, nullable = false)

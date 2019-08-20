@@ -46,4 +46,6 @@ public interface AccountService extends UserDetailsService {
 
     public Account updatePassword(Account account, String password) throws AccountNotFoundException;
 
+    public Boolean isEmailAlreadyInUse(String email);
+
 }
